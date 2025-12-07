@@ -7,6 +7,10 @@ sources = [
   'main.cpp',
   'Game.h',
   'Game.cpp',
+  'SceneManager.h',
+  'SceneManager.cpp',
+  'Scene.h',
+  'SceneType.h',
 ]
 
 executable(
