@@ -7,6 +7,8 @@
 #include "SceneType.h"
 #include <vector>
 
+class Game;
+
 class SceneManager{
 
 public:

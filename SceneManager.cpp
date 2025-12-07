@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "GameScene.h"
 #include <iostream>
 
 SceneManager::SceneManager(Game* game){
@@ -11,7 +12,9 @@ SceneManager::SceneManager(Game* game){
 }
 
 SceneManager::~SceneManager(){
-    mGame = nullptr;
+    if (currentScene != nullptr){
+	delete currentScene;
+    }
 }
 
 bool SceneManager::SetScene(SceneType type){
@@ -19,7 +22,7 @@ bool SceneManager::SetScene(SceneType type){
     switch (type){
 	case SceneType::SCENE_GAME:
 	    delete currentScene;
-	    //currentScene = new GameScene();
+	    currentScene = new GameScene(mGame);
 	    break;
 	default:
 	    return false;

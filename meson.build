@@ -11,6 +11,8 @@ sources = [
   'SceneManager.cpp',
   'Scene.h',
   'SceneType.h',
+  'GameScene.h',
+  'GameScene.cpp',
 ]
 
 executable(
