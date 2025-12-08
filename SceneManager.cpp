@@ -36,6 +36,10 @@ bool SceneManager::SetScene(SceneType type){
     return true;
 }
 
-void SceneManager::Update(){
+void SceneManager::Tick(){
+    currentScene->Input();
     currentScene->Update();
+    currentScene->Render();
 }
+
+

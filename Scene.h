@@ -14,7 +14,9 @@ public:
     virtual ~Scene() = default;
     std::function<void(SceneType)> RequestChangeScene;
     virtual void OnEnter() = 0;
+    virtual void Input() = 0;
     virtual void Update() = 0;
+    virtual void Render() = 0;
     virtual void OnExit() = 0;
 
 protected:

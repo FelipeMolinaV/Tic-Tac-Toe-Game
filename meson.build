@@ -13,6 +13,7 @@ sources = [
   'SceneType.h',
   'GameScene.h',
   'GameScene.cpp',
+  'GameState.h',
 ]
 
 executable(

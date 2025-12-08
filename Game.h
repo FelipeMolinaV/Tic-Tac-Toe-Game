@@ -3,6 +3,7 @@
 
 #include <SDL3/SDL.h>
 #include <iostream>
+#include "GameState.h"
 
 class SceneManager;
 
@@ -14,6 +15,8 @@ public:
     ~Game();
     bool Init();
     void Run();
+    GameState GetGameState();
+    void SetGameState(GameState state);
     const bool* GetKeystates();
 
 private:
@@ -23,7 +26,7 @@ private:
     SceneManager* mSceneManager;
     int width;
     int height;
-    bool running;
+    GameState mGameState;
     const bool* mKeystates;
 };
 

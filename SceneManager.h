@@ -16,7 +16,7 @@ public:
     SceneManager(Game* game);
     ~SceneManager();
     bool SetScene(SceneType type);
-    void Update();
+    void Tick();
 
 private:
 

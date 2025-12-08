@@ -59,32 +59,33 @@ bool Game::Init(){
 	return false;
     }
 
+    mGameState = GameState::GAME_STATE_RUNNING;
+
     return true; 
+}
+GameState Game::GetGameState(){
+    return mGameState;
+}
+
+void Game::SetGameState(GameState state){
+    mGameState = state;
 }
 
 void Game::Run(){
-   
-    // TODO: Get Input and render in SceneManager
-    while (running){
-	
-	SDL_Event event;
 
+    SDL_Event event;
+    while (mGameState == GameState::GAME_STATE_RUNNING){
 	while (SDL_PollEvent(&event)){
 	    if (event.type == SDL_EVENT_QUIT){
-		running = false;
+		mGameState = GameState::GAME_STATE_STOPPED;	
+		break;
 	    }
 	}
 
-	mSceneManager->Update();
-
-	SDL_RenderClear(mRenderer);
-	SDL_SetRenderDrawColor(mRenderer, 191, 191, 191, 255);
-	SDL_RenderPresent(mRenderer);
+	mSceneManager->Tick();
     }
-
 }
 
 const bool* Game::GetKeystates(){
     return mKeystates;
 }
-

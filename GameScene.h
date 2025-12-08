@@ -9,7 +9,9 @@ public:
 
     inline GameScene(Game* game) : Scene(game) {}
     void OnEnter() override;
+    void Input() override;
     void Update() override;
+    void Render() override;
     void OnExit() override;
 };
 
