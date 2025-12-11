@@ -3,6 +3,8 @@
 
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <memory>
+
 #include "GameState.h"
 
 class SceneManager;
@@ -24,7 +26,7 @@ private:
 
     SDL_Window* mWindow;
     SDL_Renderer* mRenderer;
-    SceneManager* mSceneManager;
+    std::unique_ptr<SceneManager> mSceneManager;
     int width;
     int height;
     GameState mGameState;

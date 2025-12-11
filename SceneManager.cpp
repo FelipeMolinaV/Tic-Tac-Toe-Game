@@ -11,18 +11,11 @@ SceneManager::SceneManager(Game* game){
     }
 }
 
-SceneManager::~SceneManager(){
-    if (currentScene != nullptr){
-	delete currentScene;
-    }
-}
-
 bool SceneManager::SetScene(SceneType type){
 
     switch (type){
 	case SceneType::SCENE_GAME:
-	    delete currentScene;
-	    currentScene = new GameScene(mGame);
+	    currentScene = std::make_unique<GameScene>(mGame); 
 	    break;
 	default:
 	    return false;

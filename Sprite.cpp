@@ -1,20 +1,17 @@
 #include "Sprite.h"
 
 Sprite::Sprite(SDL_Renderer* renderer, std::string path){
-    mTexture = new Texture(renderer, path);
+    mTexture = std::make_unique<Texture>(renderer, path); 
 }
 
 Sprite::Sprite(SDL_Renderer* renderer, std::string path, SDL_Point size) : mSize(size) {
-    mTexture = new Texture(renderer, path);
+    mTexture = std::make_unique<Texture>(renderer, path);
 }
 
 Sprite::Sprite(SDL_Renderer* renderer, std::string path, SDL_Point size, SDL_Point position) : mSize(size), mPosition(position) {
-    mTexture = new Texture(renderer, path);
+    mTexture = std::make_unique<Texture>(renderer, path);
 }
 
-Sprite::~Sprite(){
-    delete mTexture;
-}
 
 SDL_Point& Sprite::GetSize(){
     return mSize;

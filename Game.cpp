@@ -10,7 +10,6 @@ Game::Game(int w, int h) : width(w), height(h) {
 Game::~Game(){
     SDL_DestroyWindow(mWindow);
     SDL_DestroyRenderer(mRenderer);
-    delete mSceneManager;
     delete[] mKeystates;
     SDL_Quit();
 }
@@ -41,7 +40,7 @@ bool Game::Init(){
 	return false;
     }
 
-    mSceneManager = new SceneManager(this);
+    mSceneManager = std::make_unique<SceneManager>(this); 
 
     if (mSceneManager == nullptr){
 	std::cout << "Failed to initialize Scene Manager" << '\n';

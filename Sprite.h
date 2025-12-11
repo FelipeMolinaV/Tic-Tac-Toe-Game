@@ -3,6 +3,7 @@
 
 #include <SDL3/SDL.h>
 #include "Texture.h"
+#include <memory>
 
 class Sprite{
 
@@ -18,13 +19,11 @@ public:
     Sprite(SDL_Renderer* renderer, std::string path);
     Sprite(SDL_Renderer* renderer, std::string path, SDL_Point size);
     Sprite(SDL_Renderer* renderer, std::string path, SDL_Point size, SDL_Point position);
-    ~Sprite();
 
 private:
 
     // Private constructor and Destructor used by a friend factory class
-
-    Texture* mTexture;
+    std::unique_ptr<Texture> mTexture; 
     
     // TODO: Replace SDL_Point to a proper class wrapper
     SDL_Point mSize;

@@ -2,10 +2,12 @@
 #define SCENEMANAGER_H
 
 #include <SDL3/SDL.h>
+#include <vector>
+#include <memory>
+
 #include "Game.h"
 #include "Scene.h"
 #include "SceneType.h"
-#include <vector>
 
 class Game;
 
@@ -14,14 +16,13 @@ class SceneManager{
 public:
 
     SceneManager(Game* game);
-    ~SceneManager();
     bool SetScene(SceneType type);
     void Tick();
 
 private:
 
     Game* mGame;
-    Scene* currentScene;
+    std::unique_ptr<Scene> currentScene;
 };
 
 #endif
