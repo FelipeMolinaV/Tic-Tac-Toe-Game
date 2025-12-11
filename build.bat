@@ -4,6 +4,7 @@ IF NOT EXIST builddir (
     meson setup builddir
     echo "Copiando SDL3.dll..."
     copy /Y "C:\libs\SDL3-3.2.26\x86_64-w64-mingw32\bin\SDL3.dll" "builddir\"
+    copy /Y "C:\libs\SDL3_image-3.2.4\x86_64-w64-mingw32\bin\SDL3_image.dll" "builddir\"
 )
 
 echo "compilando..."

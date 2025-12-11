@@ -15,6 +15,7 @@ public:
     ~Game();
     bool Init();
     void Run();
+    SDL_Renderer* GetRenderer();
     GameState GetGameState();
     void SetGameState(GameState state);
     const bool* GetKeystates();

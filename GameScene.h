@@ -2,6 +2,7 @@
 #define GAMESCENE_H
 
 #include "Scene.h"
+#include "Sprite.h"
 
 class GameScene : public Scene {
     
@@ -13,6 +14,12 @@ public:
     void Update() override;
     void Render() override;
     void OnExit() override;
+
+private:
+
+    // *** TODO: Delete this ****
+    Sprite* testSprite;
+    // *********************
 };
 
 #endif

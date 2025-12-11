@@ -63,6 +63,11 @@ bool Game::Init(){
 
     return true; 
 }
+
+SDL_Renderer* Game::GetRenderer(){
+    return mRenderer;
+}
+
 GameState Game::GetGameState(){
     return mGameState;
 }
@@ -89,3 +94,4 @@ void Game::Run(){
 const bool* Game::GetKeystates(){
     return mKeystates;
 }
+
