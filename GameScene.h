@@ -15,11 +15,6 @@ public:
     void Render() override;
     void OnExit() override;
 
-private:
-
-    // *** TODO: Delete this ****
-    Sprite* testSprite;
-    // *********************
 };
 
 #endif

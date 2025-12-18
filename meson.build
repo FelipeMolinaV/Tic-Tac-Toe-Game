@@ -1,10 +1,12 @@
-project('Tic Tac Toe Game', 'cpp', version : '0.1', default_options : ['cpp_std=c++17'])
+project('Tic Tac Toe Game', 'cpp', version : '0.1', default_options : ['cpp_std=c++20'])
 
 sdl3_inc = include_directories('C:/libs/SDL3-3.2.26/x86_64-w64-mingw32/include')
 sdl3_lib_dir = 'C:/libs/SDL3-3.2.26/x86_64-w64-mingw32/lib'
 
 sdl3_img_inc = include_directories('C:/libs/SDL3_image-3.2.4/x86_64-w64-mingw32/include')
 sdl3_img_lib = 'C:/libs/SDL3_image-3.2.4/x86_64-w64-mingw32/lib'
+
+json_dep = dependency('nlohmann_json')
 
 sources = [
   'main.cpp',
@@ -20,7 +22,12 @@ sources = [
   'Texture.h',
   'Texture.cpp',
   'Sprite.h',
-  'Sprite.cpp'
+  'Sprite.cpp',
+  'AssetManager.h',
+  'AssetManager.cpp',
+  'Asset.h',
+  'AssetFactory.h',
+  'AssetFactory.cpp'
 ]
 
 executable(
@@ -32,6 +39,6 @@ executable(
     '-L' + sdl3_img_lib,
     '-lSDL3',
     '-lSDL3_image'
-  ]
+  ],
+  dependencies: [json_dep]
 )
-

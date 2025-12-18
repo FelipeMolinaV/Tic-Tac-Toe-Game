@@ -4,7 +4,7 @@
 
 int main(int argc, char* argv[]){
     
-    Game game(640, 480);
+    Game game(1280, 720);
 
     if ( !game.Init() ){
 	std::cout << "Failed to initialize the game";	

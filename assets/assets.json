@@ -1,0 +1,11 @@
+{
+    "sprites" : [
+		{
+			"type" : "sprite",
+			"key" : "sprite1",
+			"path" : "assets/sprite1.png",
+			"width" : 320,
+			"height" : 360
+		}
+	]
+}

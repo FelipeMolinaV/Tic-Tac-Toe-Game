@@ -1,14 +1,15 @@
 #include "SceneManager.h"
 #include "GameScene.h"
 #include <iostream>
+#include <stdexcept>
 
 SceneManager::SceneManager(Game* game){
+    // TODO: replace with throw 
     if (game == nullptr){
-	std::cout << "Failed to initialize the Scene Manager" << '\n';	
+	throw std::runtime_error("Null pointer passed to game");
     }
-    else {
-	mGame = game;
-    }
+
+    mGame = game;
 }
 
 bool SceneManager::SetScene(SceneType type){

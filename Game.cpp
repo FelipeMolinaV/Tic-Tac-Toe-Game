@@ -38,6 +38,9 @@ bool Game::Init(){
     if (mRenderer == nullptr){
 	std::cout << "Failed to create a renderer" << '\n';
 	return false;
+    } 
+    else {
+	SDL_SetRenderLogicalPresentation(mRenderer, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     }
 
     mSceneManager = std::make_unique<SceneManager>(this); 
@@ -50,6 +53,14 @@ bool Game::Init(){
 	mSceneManager->SetScene(SceneType::SCENE_GAME);
     }
 
+    mAssetManager = std::make_shared<AssetManager>(this);
+
+    if (mAssetManager == nullptr){
+	std::cout << "Failed to initialize Asset Manager" << '\n';
+    }
+    else {
+	mAssetManager->LoadAssets("assets/assets.json");
+    }
     
     mKeystates = SDL_GetKeyboardState(nullptr);
 
@@ -69,6 +80,14 @@ SDL_Renderer* Game::GetRenderer(){
 
 GameState Game::GetGameState(){
     return mGameState;
+}
+
+std::shared_ptr<AssetManager> Game::GetAssetManager(){
+    return mAssetManager;
+}
+
+SDL_Point Game::GetWindowSize(){
+    return { width, height };
 }
 
 void Game::SetGameState(GameState state){

@@ -1,4 +1,5 @@
 #include "Sprite.h"
+#include <iostream>
 
 Sprite::Sprite(SDL_Renderer* renderer, std::string path){
     mTexture = std::make_unique<Texture>(renderer, path); 
@@ -33,4 +34,8 @@ void Sprite::SetPosition(int x, int y){
 
 void Sprite::RenderSprite(){
     mTexture->RenderTexture(mSize, mPosition);
+}
+
+void Sprite::GetAssetInfo(){
+    std::cout << "----- Sprite info -----" << '\n';
 }
