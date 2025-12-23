@@ -22,13 +22,12 @@ public:
     SDL_Point& GetPosition();
     void SetPosition(int x, int y);
     void RenderSprite();
+    void GetAssetInfo() override;
 
 
 private:
 
     std::unique_ptr<Texture> mTexture; 
-
-    void GetAssetInfo() override;
     
     // TODO: Replace SDL_Point to a proper class wrapper
     SDL_Point mSize;

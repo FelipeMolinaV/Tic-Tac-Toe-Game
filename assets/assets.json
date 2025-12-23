@@ -2,10 +2,10 @@
     "sprites" : [
 		{
 			"type" : "sprite",
-			"key" : "sprite1",
-			"path" : "assets/sprite1.png",
-			"width" : 320,
-			"height" : 360
+			"asset_id" : 0,
+			"path" : "assets/sprites/square.png",
+			"width" : 200,
+			"height" : 200
 		}
 	]
 }

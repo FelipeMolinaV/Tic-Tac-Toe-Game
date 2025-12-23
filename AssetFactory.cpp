@@ -15,8 +15,8 @@ std::shared_ptr<Asset> AssetFactory::CreateAsset(json& data){
 	int height = data.at("height").get<int>();
 	
 	SDL_Point size = { width, height }; 
-
-	return std::make_shared<Sprite>(mGame->GetRenderer(), path, size);
+	std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(mGame->GetRenderer(), path, size);
+	return sprite; 
 
     }
 

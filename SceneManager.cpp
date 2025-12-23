@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include <iostream>
 #include <stdexcept>
+#include <type_traits>
 
 SceneManager::SceneManager(Game* game){
     // TODO: replace with throw 
@@ -24,6 +25,17 @@ bool SceneManager::SetScene(SceneType type){
 
     currentScene->RequestChangeScene = [&](SceneType type){
 	this->SetScene(type);
+    };
+
+    currentScene->RequestSprite = [&](int assetId){
+
+	std::shared_ptr<Sprite> sprite = mGame->GetAssetManager()->GetAsset<Sprite>(assetId);
+
+	if (!sprite){
+	    std::cout << "Failed to return sprite" << '\n';
+	}
+
+	return sprite;
     };
 
     currentScene->OnEnter();

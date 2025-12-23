@@ -27,7 +27,8 @@ sources = [
   'AssetManager.cpp',
   'Asset.h',
   'AssetFactory.h',
-  'AssetFactory.cpp'
+  'AssetFactory.cpp',
+  'AssetID.h'
 ]
 
 executable(

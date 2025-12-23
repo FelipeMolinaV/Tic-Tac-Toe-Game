@@ -1,0 +1,10 @@
+#ifndef ASSETID_H
+#define ASSETID_H
+
+enum AssetID{
+    ASSET_SPRITE_SQUARE,
+    ASSET_SPRITE_CROSS,
+    ASSET_SPRITE_CIRCLE,
+    ASSET_SOUND_CLICK
+};
+#endif

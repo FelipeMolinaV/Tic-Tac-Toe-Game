@@ -24,13 +24,9 @@ void AssetManager::LoadAssets(std::string path){
 
     auto& sprites = data["sprites"];
 
-    for (auto& sprite : sprites){
-	std::string key = sprite["key"];
-	mAssets["sprite"][key] = mAssetFactory->CreateAsset(sprite); 
+    for (auto& spriteInfo : sprites){
+	int assetId = spriteInfo.at("asset_id").get<int>();
+	mAssets["sprite"][assetId] = mAssetFactory->CreateAsset(spriteInfo); 
     }
 }
 
-std::shared_ptr<Asset> AssetManager::GetAsset(std::string key){
-    // TODO: make dynamic
-    return mAssets["sprite"][key];
-}

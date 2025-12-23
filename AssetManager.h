@@ -5,12 +5,15 @@
 #include <unordered_map>
 #include <memory>
 #include <string>
+#include <type_traits>
 
 #include "Asset.h"
 #include "Game.h"
 #include "AssetFactory.h"
+#include "Sprite.h"
+#include "AssetID.h"
 
-using asset_map = std::unordered_map<std::string, std::shared_ptr<Asset>>;
+using asset_map = std::unordered_map<int, std::shared_ptr<Asset>>;
 
 class Game;
 class AssetFactory;
@@ -21,7 +24,14 @@ public:
 
     AssetManager(Game* game);
     void LoadAssets(std::string path);
-    std::shared_ptr<Asset> GetAsset(std::string key);
+
+    template<typename T>
+    std::shared_ptr<T> GetAsset(int assetId){
+	if (std::is_same_v<T, Sprite>){
+	    std::shared_ptr<Sprite> sprite = std::dynamic_pointer_cast<Sprite>(mAssets["sprite"][assetId]);
+	    return std::dynamic_pointer_cast<Sprite>(mAssets["sprite"][assetId]);
+	}
+    }
 
 private:
 
