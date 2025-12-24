@@ -37,6 +37,13 @@ bool SceneManager::SetScene(SceneType type){
 	this->SetScene(type);
     };
 
+    currentScene->RequestRender = [&](std::function<void()> function){
+	SDL_RenderClear(mGame->GetRenderer());
+	SDL_SetRenderDrawColor(mGame->GetRenderer(), 0, 0, 0, 255);
+	function();
+	SDL_RenderPresent(mGame->GetRenderer());
+    };
+
     currentScene->RequestSprite = [&](int assetId){
 
 	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetId);

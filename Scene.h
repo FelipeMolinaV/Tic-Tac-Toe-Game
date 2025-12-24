@@ -24,6 +24,7 @@ public:
 
     std::function<void(SceneType)> RequestChangeScene;
     std::function<void(std::function<void(SDL_Event)>)> RequestInput;
+    std::function<void(std::function<void()>)> RequestRender;
     RequestAssetFunction<Sprite> RequestSprite;
 
     virtual void OnEnter() = 0;

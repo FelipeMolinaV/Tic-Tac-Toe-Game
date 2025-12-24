@@ -63,13 +63,13 @@ void GameScene::Update(){
 
 void GameScene::Render(){
 
-    SDL_RenderClear(mGame->GetRenderer());
-    SDL_SetRenderDrawColor(mGame->GetRenderer(), 0, 0, 0, 255);
+    auto function = [&](){
+	for (auto& [key, value] : sprites){
+	    value->Render();
+	}
+    };
 
-    for (auto& [key, value] : sprites){
-	value->Render();
-    }
-    SDL_RenderPresent(mGame->GetRenderer());
+    RequestRender(function);
 }
 
 void GameScene::OnExit(){
