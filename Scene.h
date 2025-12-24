@@ -4,11 +4,13 @@
 #include <functional>
 #include <unordered_map>
 #include <string>
+#include <memory>
 
 #include <SDL3/SDL.h>
 #include "Game.h"
 #include "SceneType.h"
 #include "AssetID.h"
+#include "Sprite.h"
 
 template<typename T>
 using RequestAssetFunction = std::function<std::shared_ptr<T>(int)>;
@@ -19,8 +21,9 @@ public:
     inline Scene(Game* game) : mGame(game) {}
 
     virtual ~Scene() = default;
-    std::function<void(SceneType)> RequestChangeScene;
 
+    std::function<void(SceneType)> RequestChangeScene;
+    std::function<void(std::function<void(SDL_Event)>)> RequestInput;
     RequestAssetFunction<Sprite> RequestSprite;
 
     virtual void OnEnter() = 0;
@@ -33,6 +36,7 @@ protected:
 
     Game* mGame;
     std::unordered_map<std::string, std::shared_ptr<Sprite>> sprites;
+    SDL_Point mousePosition;
 
 };
 

@@ -10,7 +10,7 @@
 #include "Asset.h"
 #include "Game.h"
 #include "AssetFactory.h"
-#include "Sprite.h"
+#include "Texture.h"
 #include "AssetID.h"
 
 using asset_map = std::unordered_map<int, std::shared_ptr<Asset>>;
@@ -27,9 +27,9 @@ public:
 
     template<typename T>
     std::shared_ptr<T> GetAsset(int assetId){
-	if (std::is_same_v<T, Sprite>){
-	    std::shared_ptr<Sprite> sprite = std::dynamic_pointer_cast<Sprite>(mAssets["sprite"][assetId]);
-	    return std::dynamic_pointer_cast<Sprite>(mAssets["sprite"][assetId]);
+	if (std::is_same_v<T, Texture>){
+	    std::shared_ptr<Texture> texture = std::dynamic_pointer_cast<Texture>(mAssets["texture"][assetId]);
+	    return texture; 
 	}
     }
 

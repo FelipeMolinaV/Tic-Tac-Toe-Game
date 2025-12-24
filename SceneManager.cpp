@@ -4,6 +4,9 @@
 #include <stdexcept>
 #include <type_traits>
 
+#include "GameState.h"
+#include "Texture.h"
+
 SceneManager::SceneManager(Game* game){
     // TODO: replace with throw 
     if (game == nullptr){
@@ -23,13 +26,21 @@ bool SceneManager::SetScene(SceneType type){
 	    return false;
     }
 
+    currentScene->RequestInput = [&](std::function<void(SDL_Event)> function){
+	SDL_Event event;
+	while (SDL_PollEvent(&event)){
+	   function(event); 
+	}
+    };
+
     currentScene->RequestChangeScene = [&](SceneType type){
 	this->SetScene(type);
     };
 
     currentScene->RequestSprite = [&](int assetId){
 
-	std::shared_ptr<Sprite> sprite = mGame->GetAssetManager()->GetAsset<Sprite>(assetId);
+	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetId);
+	std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(texture); 
 
 	if (!sprite){
 	    std::cout << "Failed to return sprite" << '\n';

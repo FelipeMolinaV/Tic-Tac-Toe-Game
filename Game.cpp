@@ -95,16 +95,7 @@ void Game::SetGameState(GameState state){
 }
 
 void Game::Run(){
-
-    SDL_Event event;
     while (mGameState == GameState::GAME_STATE_RUNNING){
-	while (SDL_PollEvent(&event)){
-	    if (event.type == SDL_EVENT_QUIT){
-		mGameState = GameState::GAME_STATE_STOPPED;	
-		break;
-	    }
-	}
-
 	mSceneManager->Tick();
     }
 }

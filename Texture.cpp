@@ -24,3 +24,6 @@ void Texture::RenderTexture(SDL_Point& size, SDL_Point& position){
     SDL_FRect dstRect = { (float) position.x, (float) position.y, (float) size.x, (float) size.y};
     SDL_RenderTexture(mRenderer, mTexture, nullptr, &dstRect);
 }
+
+void Texture::GetAssetInfo(){
+}

@@ -5,13 +5,17 @@
 #include <SDL3_image/SDL_image.h>
 #include <string>
 
-class Texture{
+#include "Asset.h"
+
+class Texture : public Asset {
 
 public:
 
     Texture(SDL_Renderer* renderer, std::string path);
     ~Texture();
     void RenderTexture(SDL_Point& size, SDL_Point& position);
+
+    void GetAssetInfo() override;
 
 private:
 

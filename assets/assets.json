@@ -1,11 +1,9 @@
 {
-    "sprites" : [
+    "textures" : [
 		{
-			"type" : "sprite",
+			"type" : "texture",
 			"asset_id" : 0,
-			"path" : "assets/sprites/square.png",
-			"width" : 200,
-			"height" : 200
+			"path" : "assets/textures/square.png"
 		}
 	]
 }

@@ -22,11 +22,11 @@ void AssetManager::LoadAssets(std::string path){
     json data = json::parse(file);
     file.close();
 
-    auto& sprites = data["sprites"];
+    auto& textures = data["textures"];
 
-    for (auto& spriteInfo : sprites){
-	int assetId = spriteInfo.at("asset_id").get<int>();
-	mAssets["sprite"][assetId] = mAssetFactory->CreateAsset(spriteInfo); 
+    for (auto& textureInfo : textures){
+	int assetId = textureInfo.at("asset_id").get<int>();
+	mAssets["texture"][assetId] = mAssetFactory->CreateAsset(textureInfo); 
     }
 }
 

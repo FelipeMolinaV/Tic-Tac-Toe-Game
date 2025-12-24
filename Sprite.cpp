@@ -1,16 +1,16 @@
 #include "Sprite.h"
 #include <iostream>
 
-Sprite::Sprite(SDL_Renderer* renderer, std::string path){
-    mTexture = std::make_unique<Texture>(renderer, path); 
+Sprite::Sprite(std::shared_ptr<Texture> texture){
+    mTexture = texture; 
 }
 
-Sprite::Sprite(SDL_Renderer* renderer, std::string path, SDL_Point size) : mSize(size) {
-    mTexture = std::make_unique<Texture>(renderer, path);
+Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size) : mSize(size) {
+    mTexture = texture;
 }
 
-Sprite::Sprite(SDL_Renderer* renderer, std::string path, SDL_Point size, SDL_Point position) : mSize(size), mPosition(position) {
-    mTexture = std::make_unique<Texture>(renderer, path);
+Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position) : mSize(size), mPosition(position) {
+    mTexture = texture;
 }
 
 
@@ -32,10 +32,20 @@ void Sprite::SetPosition(int x, int y){
     mPosition.y = y;
 }
 
-void Sprite::RenderSprite(){
-    mTexture->RenderTexture(mSize, mPosition);
+bool Sprite::IsColliding(int x, int y){
+
+    // TODO: mPosition.x + mSize.x define the bounding
+    if (!(x >= mPosition.x && x <= ( mPosition.x + mSize.x))){
+	return false;
+    }
+
+    if (!(y >= mPosition.y && y <= ( mPosition.y + mSize.y))){
+	return false;
+    }
+
+    return true;
 }
 
-void Sprite::GetAssetInfo(){
-    std::cout << "----- Sprite info -----" << '\n';
+void Sprite::Render(){
+    mTexture->RenderTexture(mSize, mPosition);
 }
