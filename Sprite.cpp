@@ -1,51 +1,43 @@
 #include "Sprite.h"
 #include <iostream>
 
-Sprite::Sprite(std::shared_ptr<Texture> texture){
+Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture) 
+    : 
+    GameObject(gameObjectID) 
+{
     mTexture = texture; 
 }
 
-Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size) : mSize(size) {
+Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size) 
+    : 
+    GameObject(gameObjectID, size) 
+{
     mTexture = texture;
+    mTextureSize = size; 
 }
 
-Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position) : mSize(size), mPosition(position) {
+Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position) 
+    : 
+    GameObject(gameObjectID, size, position) 
+{
     mTexture = texture;
+    mTextureSize = size;
 }
 
-
-SDL_Point& Sprite::GetSize(){
-    return mSize;
+SDL_Point Sprite::GetTextureSize(){
+    return mTextureSize;
 }
 
-void Sprite::SetSize(int w, int h){
-    mSize.x = w;
-    mSize.y = h;
-}
-
-SDL_Point& Sprite::GetPosition(){
-    return mPosition;
-}
-
-void Sprite::SetPosition(int x, int y){
-    mPosition.x = x;
-    mPosition.y = y;
-}
-
-bool Sprite::IsColliding(int x, int y){
-
-    // TODO: mPosition.x + mSize.x define the bounding
-    if (!(x >= mPosition.x && x <= ( mPosition.x + mSize.x))){
-	return false;
-    }
-
-    if (!(y >= mPosition.y && y <= ( mPosition.y + mSize.y))){
-	return false;
-    }
-
-    return true;
+void Sprite::SetTextureSize(int x, int y){
+    mTextureSize.x = x;
+    mTextureSize.y = y;
 }
 
 void Sprite::Render(){
-    mTexture->RenderTexture(mSize, mPosition);
+    if ((mTextureSize.x == 0 && mTextureSize.y == 0) || (mSize.x == mTextureSize.x && mSize.y == mTextureSize.y )){
+	mTexture->RenderTexture(mSize, mPosition);
+    }
+    else {
+	mTexture->RenderTexture(mTextureSize, mPosition);
+    }
 }

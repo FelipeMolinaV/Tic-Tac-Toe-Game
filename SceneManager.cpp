@@ -3,9 +3,12 @@
 #include <iostream>
 #include <stdexcept>
 #include <type_traits>
+#include <vector>
 
 #include "GameState.h"
 #include "Texture.h"
+#include "GameObject.h"
+#include "CollisionSystem.h"
 
 SceneManager::SceneManager(Game* game){
     // TODO: replace with throw 
@@ -46,14 +49,29 @@ bool SceneManager::SetScene(SceneType type){
 
     currentScene->RequestSprite = [&](int assetId){
 
+	// TODO: Replace this and add a GameObject Factory
+	static int gameObjectID;
+	gameObjectID++;
+
 	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetId);
-	std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(texture); 
+	std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(gameObjectID, texture); 
 
 	if (!sprite){
 	    std::cout << "Failed to return sprite" << '\n';
 	}
 
 	return sprite;
+    };
+
+    currentScene->RequestCheckCollisions = [&](std::unordered_map<std::string, std::shared_ptr<Sprite>> sprites){
+
+	std::vector<std::shared_ptr<GameObject>> spritesVector;
+
+	for (auto& [key, value] : sprites){
+	    spritesVector.push_back(value);
+	}
+
+	CheckCollisions(spritesVector);
     };
 
     currentScene->OnEnter();

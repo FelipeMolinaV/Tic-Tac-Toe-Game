@@ -28,7 +28,10 @@ sources = [
   'Asset.h',
   'AssetFactory.h',
   'AssetFactory.cpp',
-  'AssetID.h'
+  'AssetID.h',
+  'GameObject.h',
+  'GameObject.cpp',
+  'CollisionSystem.h'
 ]
 
 executable(

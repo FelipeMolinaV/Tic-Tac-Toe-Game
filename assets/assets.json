@@ -4,6 +4,11 @@
 			"type" : "texture",
 			"asset_id" : 0,
 			"path" : "assets/textures/square.png"
+		},
+		{
+			"type" : "texture",
+			"asset_id" : 1,
+			"path" : "assets/textures/cursor.png"
 		}
 	]
 }

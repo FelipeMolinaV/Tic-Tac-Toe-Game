@@ -26,6 +26,7 @@ public:
     std::function<void(std::function<void(SDL_Event)>)> RequestInput;
     std::function<void(std::function<void()>)> RequestRender;
     RequestAssetFunction<Sprite> RequestSprite;
+    std::function<void(std::unordered_map<std::string, std::shared_ptr<Sprite>>)> RequestCheckCollisions;
 
     virtual void OnEnter() = 0;
     virtual void Input() = 0;

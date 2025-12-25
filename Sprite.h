@@ -5,35 +5,26 @@
 #include <memory>
 
 #include "Texture.h"
+#include "GameObject.h"
 
 class AssetFactory;
 
-class Sprite {
+class Sprite : public GameObject {
 
 public:
 
-    Sprite(std::shared_ptr<Texture> texture);
-    Sprite(std::shared_ptr<Texture> texture, SDL_Point size);
-    Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position);
-
-    SDL_Point& GetSize();
-    void SetSize(int w, int h);
-    SDL_Point& GetPosition();
-    void SetPosition(int x, int y);
-
-    // Check collision with position
-    bool IsColliding(int x, int y);
+    Sprite(int gameObjectID, std::shared_ptr<Texture> texture);
+    Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size);
+    Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position);
 
     void Render();
-
+    SDL_Point GetTextureSize();
+    void SetTextureSize(int x, int y);
 
 private:
 
     std::shared_ptr<Texture> mTexture; 
-    
-    // TODO: Replace SDL_Point to a proper class wrapper
-    SDL_Point mSize;
-    SDL_Point mPosition;
+    SDL_Point mTextureSize;
 
 };
 
