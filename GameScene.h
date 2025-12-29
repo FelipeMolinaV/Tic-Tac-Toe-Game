@@ -1,8 +1,12 @@
 #ifndef GAMESCENE_H
 #define GAMESCENE_H
 
+#include <vector>
+#include <unordered_map>
+
 #include "Scene.h"
 #include "Sprite.h"
+
 
 class GameScene : public Scene {
     
@@ -13,7 +17,7 @@ public:
     void Input() override;
     void Update() override;
     void Render() override;
-    void OnExit() override;
+    void OnExit() override; 
 
 };
 

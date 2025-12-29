@@ -14,6 +14,7 @@ public:
     Texture(SDL_Renderer* renderer, std::string path);
     ~Texture();
     void RenderTexture(SDL_Point& size, SDL_Point& position);
+    void RenderTexture(SDL_Point& size, SDL_Point& position, Uint8 alpha);
     void GetAssetInfo() override;
 
 private:

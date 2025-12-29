@@ -9,11 +9,14 @@
 #include <SDL3/SDL.h>
 #include "Game.h"
 #include "SceneType.h"
+#include "Asset.h"
+
+// TODO: RequestSprite(AssetID...) change asset id from other identifier
 #include "AssetID.h"
 #include "Sprite.h"
 
 template<typename T>
-using RequestAssetFunction = std::function<std::shared_ptr<T>(int)>;
+using RequestGameObjectFunction = std::function<std::shared_ptr<T>(int)>;
 
 class Scene{
 public:
@@ -25,7 +28,8 @@ public:
     std::function<void(SceneType)> RequestChangeScene;
     std::function<void(std::function<void(SDL_Event)>)> RequestInput;
     std::function<void(std::function<void()>)> RequestRender;
-    RequestAssetFunction<Sprite> RequestSprite;
+    std::function<std::shared_ptr<Texture>(int)> RequestTexture;
+    RequestGameObjectFunction<Sprite> RequestSprite;
     std::function<void(std::unordered_map<std::string, std::shared_ptr<Sprite>>)> RequestCheckCollisions;
 
     virtual void OnEnter() = 0;

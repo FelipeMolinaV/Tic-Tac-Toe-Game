@@ -47,6 +47,11 @@ bool SceneManager::SetScene(SceneType type){
 	SDL_RenderPresent(mGame->GetRenderer());
     };
 
+    currentScene->RequestTexture = [&](int assetId){
+	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetId);
+	return texture;
+    };
+
     currentScene->RequestSprite = [&](int assetId){
 
 	// TODO: Replace this and add a GameObject Factory

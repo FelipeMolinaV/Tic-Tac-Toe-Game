@@ -3,17 +3,29 @@
 
 GameObject::GameObject(int gameObjectID){
     mGameObjectID = gameObjectID;
+    OnEnter = nullptr;
+    OnExit = nullptr;
+    OnStay = nullptr;
+    OnClick = nullptr;
 }
 
 GameObject::GameObject(int gameObjectID, SDL_Point size){
     mGameObjectID = gameObjectID;
     mSize = size;
+    OnEnter = nullptr;
+    OnExit = nullptr;
+    OnStay = nullptr;
+    OnClick = nullptr;
 }
 
 GameObject::GameObject(int gameObjectID, SDL_Point size, SDL_Point position){
     mGameObjectID = gameObjectID;
     mSize = size;
     mPosition = position;
+    OnEnter = nullptr;
+    OnExit = nullptr;
+    OnStay = nullptr;
+    OnClick = nullptr;
 }
 
 int GameObject::GetGameObjectID(){
@@ -56,4 +68,20 @@ SDL_Point& GameObject::GetPosition(){
 void GameObject::SetPosition(int x, int y){
     mPosition.x = x;
     mPosition.y = y;
+}
+
+void GameObject::SetCollisionState(bool state){
+    mCollisionState = state;
+}
+
+bool GameObject::GetCollisionState(){
+    return mCollisionState;
+}
+
+void GameObject::SetQueryOnly(bool state){
+    mQueryOnly = state;
+}
+
+bool GameObject::IsQueryOnly(){
+    return mQueryOnly;
 }

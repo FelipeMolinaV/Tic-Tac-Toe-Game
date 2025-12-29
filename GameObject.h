@@ -4,6 +4,7 @@
 #include <SDL3/SDL.h>
 #include <vector>
 #include <functional>
+#include <memory>
 
 class GameObject{
 
@@ -24,13 +25,23 @@ public:
     SDL_Point& GetPosition();
     void SetPosition(int x, int y);
 
-    std::function<void()> OnEnter;
-    std::function<void()> OnExit;
+    void SetCollisionState(bool state);
+    bool GetCollisionState();
+
+    void SetQueryOnly(bool state);
+    bool IsQueryOnly();
+
+    std::function<void(std::shared_ptr<GameObject>)> OnEnter;
+    std::function<void(std::shared_ptr<GameObject>)> OnExit;
+    std::function<void(std::shared_ptr<GameObject>)> OnStay;
+    std::function<void()> OnClick;
 
 private:
 
     int mGameObjectID;
     std::vector<int> mCollisions;
+    bool mCollisionState;
+    bool mQueryOnly;
 
 protected:
 

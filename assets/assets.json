@@ -8,7 +8,22 @@
 		{
 			"type" : "texture",
 			"asset_id" : 1,
+			"path" : "assets/textures/square_gray.png"
+		},
+		{
+			"type" : "texture",
+			"asset_id" : 2,
 			"path" : "assets/textures/cursor.png"
+		},
+		{
+			"type" : "texture",
+			"asset_id" : 3,
+			"path" : "assets/textures/cross.png"
+		},
+		{
+			"type" : "texture",
+			"asset_id" : 4,
+			"path" : "assets/textures/circle.png"
 		}
 	]
 }

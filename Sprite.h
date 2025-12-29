@@ -18,13 +18,20 @@ public:
     Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position);
 
     void Render();
+    void Render(Uint8 alpha);
+
+    void SetTexture(std::shared_ptr<Texture> texture);
     SDL_Point GetTextureSize();
     void SetTextureSize(int x, int y);
+
+    void SetVisibleState(bool state);
+    bool GetVisibleState();
 
 private:
 
     std::shared_ptr<Texture> mTexture; 
     SDL_Point mTextureSize;
+    bool mVisibleState;
 
 };
 
