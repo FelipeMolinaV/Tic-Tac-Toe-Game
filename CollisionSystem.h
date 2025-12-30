@@ -18,6 +18,9 @@ void HandleCollision(bool collisionState, std::shared_ptr<GameObject>& gameObjec
 	    }
 	}
 	else {
+
+	    gameObject_a->mCollidingGameObject = gameObject_b;
+
 	    if (gameObject_a->OnStay != nullptr){
 		gameObject_a->OnStay(gameObject_b);
 	    }
@@ -31,6 +34,9 @@ void HandleCollision(bool collisionState, std::shared_ptr<GameObject>& gameObjec
 	    }
 	}
 	else {
+
+	    gameObject_b->mCollidingGameObject = gameObject_a;
+
 	    if (gameObject_b->OnStay != nullptr){
 		gameObject_b->OnStay(gameObject_a);
 	    }
@@ -40,6 +46,7 @@ void HandleCollision(bool collisionState, std::shared_ptr<GameObject>& gameObjec
 
 	if (gameObject_a->HasCollision(gameObject_b->GetGameObjectID())){
 	    gameObject_a->RemoveCollision(gameObject_b->GetGameObjectID());
+	    gameObject_a->mCollidingGameObject = nullptr;
 
 	    if (gameObject_a->OnExit != nullptr){
 		gameObject_a->OnExit(gameObject_b);
@@ -48,6 +55,7 @@ void HandleCollision(bool collisionState, std::shared_ptr<GameObject>& gameObjec
 
 	if (gameObject_b->HasCollision(gameObject_a->GetGameObjectID())){
 	    gameObject_b->RemoveCollision(gameObject_a->GetGameObjectID());
+	    gameObject_b->mCollidingGameObject = nullptr;
 
 	    if (gameObject_b->OnExit != nullptr){
 		gameObject_b->OnExit(gameObject_a);
@@ -77,7 +85,6 @@ void CheckCollisions(std::vector<std::shared_ptr<GameObject>>& gameObjects){
 	const auto& cursorPos = cursor->GetPosition(); 
 	const auto& objPos = obj->GetPosition();
 	const auto& objSize = obj->GetSize();
-
 
 	return (cursorPos.x >= objPos.x &&
 		cursorPos.x <= objPos.x + objSize.x &&

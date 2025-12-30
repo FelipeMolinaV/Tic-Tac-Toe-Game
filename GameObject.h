@@ -19,6 +19,8 @@ public:
     void RemoveCollision(int gameObjectID);
     std::vector<int> GetCollisions();
     bool HasCollision(int gameObjectID);
+    std::shared_ptr<GameObject> GetCollidingGameObject();
+    std::shared_ptr<GameObject> mCollidingGameObject;
 
     SDL_Point& GetSize();
     void SetSize(int w, int h);

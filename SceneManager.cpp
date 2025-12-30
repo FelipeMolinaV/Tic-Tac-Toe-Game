@@ -68,15 +68,8 @@ bool SceneManager::SetScene(SceneType type){
 	return sprite;
     };
 
-    currentScene->RequestCheckCollisions = [&](std::unordered_map<std::string, std::shared_ptr<Sprite>> sprites){
-
-	std::vector<std::shared_ptr<GameObject>> spritesVector;
-
-	for (auto& [key, value] : sprites){
-	    spritesVector.push_back(value);
-	}
-
-	CheckCollisions(spritesVector);
+    currentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){
+	CheckCollisions(sprites);
     };
 
     currentScene->OnEnter();

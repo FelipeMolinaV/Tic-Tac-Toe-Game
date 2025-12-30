@@ -7,6 +7,8 @@ GameObject::GameObject(int gameObjectID){
     OnExit = nullptr;
     OnStay = nullptr;
     OnClick = nullptr;
+    mQueryOnly = false;
+    mCollidingGameObject = nullptr;
 }
 
 GameObject::GameObject(int gameObjectID, SDL_Point size){
@@ -16,6 +18,8 @@ GameObject::GameObject(int gameObjectID, SDL_Point size){
     OnExit = nullptr;
     OnStay = nullptr;
     OnClick = nullptr;
+    mQueryOnly = false;
+    mCollidingGameObject = nullptr;
 }
 
 GameObject::GameObject(int gameObjectID, SDL_Point size, SDL_Point position){
@@ -26,6 +30,8 @@ GameObject::GameObject(int gameObjectID, SDL_Point size, SDL_Point position){
     OnExit = nullptr;
     OnStay = nullptr;
     OnClick = nullptr;
+    mQueryOnly = false;
+    mCollidingGameObject = nullptr;
 }
 
 int GameObject::GetGameObjectID(){
@@ -50,6 +56,10 @@ bool GameObject::HasCollision(int gameObjectID){
 
     return pointer != mCollisions.end();
 
+}
+
+std::shared_ptr<GameObject> GameObject::GetCollidingGameObject(){
+    return mCollidingGameObject; 
 }
 
 SDL_Point& GameObject::GetSize(){

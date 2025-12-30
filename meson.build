@@ -31,7 +31,9 @@ sources = [
   'AssetID.h',
   'GameObject.h',
   'GameObject.cpp',
-  'CollisionSystem.h'
+  'CollisionSystem.h',
+  'Timer.h',
+  'Timer.cpp'
 ]
 
 executable(

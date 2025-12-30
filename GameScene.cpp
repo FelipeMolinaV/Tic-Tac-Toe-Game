@@ -1,26 +1,57 @@
 #include "GameScene.h"
 #include <iostream>
 #include <string>
+#include <cmath>
 
 #include "Asset.h"
 #include "Sprite.h"
 #include "GameState.h"
 
+void GameScene::GenerateGrid(int widthGap, int heightGap){
+
+    // TODO: Add tools to get the screen's center or key positions
+    int screenWidth = 640;
+    int screenHeight = 360;
+
+    int i = 1;
+    int rowIncrement = 0;
+
+    for (int row = 0; row < 3; row++){
+
+	int colIncrement = 0;
+
+	for (int col = 0; col < 3; col++){
+
+	    // matrix data
+	    grid[row][col] = std::make_shared<CellData>(true, i); 
+
+	    // sprites grid
+	    std::string key = "square" + std::to_string(i);
+	    sprites[key] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
+	    sprites[key]->SetSize(200, 200);
+	    sprites[key]->SetTextureSize(200, 200);
+
+	    int spriteWidth = sprites[key]->GetSize().x;
+	    int spriteHeight = sprites[key]->GetSize().y;
+
+	    sprites[key]->SetPosition(
+		(screenWidth*0.5) + (spriteWidth*col) + colIncrement, 
+		(screenHeight/8) + spriteHeight*row + rowIncrement);    
+
+	    i++;
+	    colIncrement += widthGap;
+	}
+	rowIncrement += heightGap;
+    }
+}
+
 void GameScene::OnEnter(){
 
     std::cout << "On enter Scene Game" << '\n';
 
-    // Request assets
-    sprites["square1"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square2"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square3"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square4"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square5"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square6"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square7"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square8"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-    sprites["square9"] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
-
+    // Initialize grid
+    GenerateGrid(20, 20);
+    
     sprites["cursor_cross"] = RequestSprite(AssetID::ASSET_TEXTURE_CROSS);
     sprites["cursor_cross"]->SetSize(200, 200);
     sprites["cursor_cross"]->SetTextureSize(200, 200);
@@ -37,36 +68,50 @@ void GameScene::OnEnter(){
 	    value->OnStay = [&](std::shared_ptr<GameObject> cursorCrossObj){
 		sprites["cursor_cross"]->SetVisibleState(true);
 		sprites["cursor_cross"]->SetPosition(value->GetPosition().x, value->GetPosition().y);
+
+	    };
+
+	    value->OnClick = [&](){
+
+		auto getCell = [&](int gameObjectID) -> std::shared_ptr<CellData> {
+
+		    for (int row = 0; row < 3; row++){
+			for (int col = 0; col < 3; col++){
+			    if (grid[row][col]->gameObjectID == gameObjectID){
+				return grid[row][col];
+			    }
+			}
+		    }
+		    return nullptr;
+		};
+
+		auto cell = getCell(value->GetGameObjectID());
+
+		if (cell != nullptr && cell->state){
+
+		    std::cout << "New cross" << std::endl;
+
+		    cell->state = false;
+
+		    std::string key = "cross" + std::to_string(value->GetGameObjectID());
+		    std::shared_ptr<Sprite> sprite = RequestSprite(AssetID::ASSET_TEXTURE_CROSS);
+		    sprite->SetSize(200, 200);
+		    sprite->SetTextureSize(200, 200);
+		    sprite->SetPosition(value->GetPosition().x, value->GetPosition().y);
+		    sprite->SetCollisionState(false);
+		    pendingSprites.push_back({key, sprite});
+		}
+
 	    };
 
 	    value->OnExit = [&](std::shared_ptr<GameObject> cursorCrossObj){
 		sprites["cursor_cross"]->SetVisibleState(false);
 	    };
-
-	    value->OnClick = [&](){
-		if (value->HasCollision(sprites["cursor"]->GetGameObjectID())){
-		    std::cout << "On Click: " << value->GetGameObjectID() << std::endl;
-		}
-	    };
 	}
     }
     
-    int rowIncrement = 0;
-    int squareCount = 1;
-    for (int row = 0; row < 3; row++){
-	int colIncrement = 0;
-	for (int col = 0; col < 3; col++){
-	    std::string spriteKey = "square" + std::to_string(squareCount);
-	    auto sprite = sprites[spriteKey]; 
-	    sprite->SetPosition(colIncrement + 640/2 + 200*col, rowIncrement + 360/8 + 200*row);    
-	    colIncrement += 20;
-	    squareCount++;
-	}
-	rowIncrement += 20;
-    }
-
     sprites["cursor"] = RequestSprite(AssetID::ASSET_TEXTURE_CURSOR);
-    sprites["cursor"]->SetSize(10, 10);
+    sprites["cursor"]->SetSize(20, 20);
     sprites["cursor"]->SetTextureSize(20, 20);
     sprites["cursor"]->SetQueryOnly(true);
 }
@@ -86,13 +131,12 @@ void GameScene::Input(){
 
 	if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN){
 
-	    for (const auto& [key, value] : sprites){
+	    const auto& collidingObj = sprites["cursor"]->GetCollidingGameObject(); 
 
-		if (value->OnClick == nullptr){
-		    continue;
+	    if (collidingObj != nullptr ) {
+		if ( collidingObj->OnClick != nullptr ) {
+		    collidingObj->OnClick();	
 		}
-
-		value->OnClick();
 	    }
 	}
     };
@@ -102,17 +146,31 @@ void GameScene::Input(){
 
 void GameScene::Update(){
 
-    auto& cursor = sprites["cursor"];
-    cursor->SetPosition(mousePosition.x - (cursor->GetSize().x/2) , mousePosition.y - (cursor->GetSize().y/2));
+    sprites["cursor"]->SetPosition(mousePosition.x, mousePosition.y);
 
-    RequestCheckCollisions(sprites);
+    std::vector<std::shared_ptr<GameObject>> collidables;
+    for (auto& [key, value] : sprites){
+	if (value->GetCollisionState()){
+	    collidables.push_back(value);
+	}
+    }
+
+    RequestCheckCollisions(collidables);
+    
 }
 
 void GameScene::Render(){
 
     auto function = [&](){
+	
 	for (auto& [key, value] : sprites){
 	    if (key.substr(0, 6) == "square"){
+		value->Render();
+	    }
+	}
+
+	for (auto& [key, value] : sprites){
+	    if (key.substr(0, 5) == "cross"){
 		value->Render();
 	    }
 	}
@@ -122,6 +180,12 @@ void GameScene::Render(){
     };
 
     RequestRender(function);
+
+    for (auto& pendingSprite : pendingSprites){
+	sprites[pendingSprite.first] = pendingSprite.second;
+    }
+
+    pendingSprites.clear();
 }
 
 void GameScene::OnExit(){

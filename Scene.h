@@ -10,6 +10,7 @@
 #include "Game.h"
 #include "SceneType.h"
 #include "Asset.h"
+#include "Timer.h"
 
 // TODO: RequestSprite(AssetID...) change asset id from other identifier
 #include "AssetID.h"
@@ -30,7 +31,7 @@ public:
     std::function<void(std::function<void()>)> RequestRender;
     std::function<std::shared_ptr<Texture>(int)> RequestTexture;
     RequestGameObjectFunction<Sprite> RequestSprite;
-    std::function<void(std::unordered_map<std::string, std::shared_ptr<Sprite>>)> RequestCheckCollisions;
+    std::function<void(std::vector<std::shared_ptr<GameObject>>)> RequestCheckCollisions;
 
     virtual void OnEnter() = 0;
     virtual void Input() = 0;
@@ -43,6 +44,8 @@ protected:
     Game* mGame;
     std::unordered_map<std::string, std::shared_ptr<Sprite>> sprites;
     SDL_Point mousePosition;
+    bool mouseClick;
+    Timer timer;
 
 };
 
