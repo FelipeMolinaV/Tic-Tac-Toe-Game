@@ -34,6 +34,7 @@ private:
     bool playerTurn;
 
     void GenerateGrid(int widthGap, int heightGap);
+
 };
 
 #endif

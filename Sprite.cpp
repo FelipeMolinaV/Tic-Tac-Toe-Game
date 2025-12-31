@@ -8,6 +8,7 @@ Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture)
     mTexture = texture; 
     mVisibleState = true;
     SetCollisionState(true);
+    mAlpha = 255;
 }
 
 Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size) 
@@ -18,6 +19,7 @@ Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point siz
     mTextureSize = size; 
     mVisibleState = true;
     SetCollisionState(true);
+    mAlpha = 255;
 }
 
 Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position) 
@@ -28,6 +30,31 @@ Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point siz
     mTextureSize = size;
     mVisibleState = true;
     SetCollisionState(true);
+    mAlpha = 255;
+}
+
+Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer) 
+    : 
+    GameObject(gameObjectID, size, position) 
+{
+    mTexture = texture;
+    mTextureSize = size;
+    mVisibleState = true;
+    SetCollisionState(true);
+    mLayer = layer;
+    mAlpha = 255;
+}
+
+Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer, Uint8 alpha) 
+    : 
+    GameObject(gameObjectID, size, position) 
+{
+    mTexture = texture;
+    mTextureSize = size;
+    mVisibleState = true;
+    SetCollisionState(true);
+    mLayer = layer;
+    mAlpha = alpha;
 }
 
 void Sprite::SetTexture(std::shared_ptr<Texture> texture){
@@ -44,6 +71,22 @@ void Sprite::SetTextureSize(int x, int y){
     mTextureSize.y = y;
 }
 
+void Sprite::SetLayer(int layer){
+    mLayer = layer;
+}
+
+int Sprite::GetLayer(){
+    return mLayer;
+}
+
+void Sprite::SetAlpha(Uint8 alpha){
+    mAlpha = alpha;
+}
+
+Uint8 Sprite::GetAlpha(){
+    return mAlpha;
+}
+
 void Sprite::SetVisibleState(bool state){
     mVisibleState = state;
 }
@@ -55,21 +98,11 @@ bool Sprite::GetVisibleState(){
 void Sprite::Render(){
     if (mVisibleState){
 	if ((mTextureSize.x == 0 && mTextureSize.y == 0) || (mSize.x == mTextureSize.x && mSize.y == mTextureSize.y )){
-	    mTexture->RenderTexture(mSize, mPosition);
+	    mTexture->RenderTexture(mSize, mPosition, mAlpha);
 	}
 	else {
-	    mTexture->RenderTexture(mTextureSize, mPosition);
+	    mTexture->RenderTexture(mTextureSize, mPosition, mAlpha);
 	}
     }
 }
 
-void Sprite::Render(Uint8 alpha){
-    if (mVisibleState){
-	if ((mTextureSize.x == 0 && mTextureSize.y == 0) || (mSize.x == mTextureSize.x && mSize.y == mTextureSize.y )){
-	    mTexture->RenderTexture(mSize, mPosition, alpha);
-	}
-	else {
-	    mTexture->RenderTexture(mTextureSize, mPosition, alpha);
-	}
-    }
-}

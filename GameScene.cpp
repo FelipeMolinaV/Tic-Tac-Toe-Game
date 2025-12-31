@@ -7,6 +7,15 @@
 #include "Sprite.h"
 #include "GameState.h"
 
+enum class GameScene::Layers{
+    BACKGROUND,
+    GRID,
+    EFFECT,
+    SYMBOLS,
+    CURSOR,
+    COUNT
+};
+
 void GameScene::GenerateGrid(int widthGap, int heightGap){
 
     // TODO: Add tools to get the screen's center or key positions
@@ -30,6 +39,7 @@ void GameScene::GenerateGrid(int widthGap, int heightGap){
 	    sprites[key] = RequestSprite(AssetID::ASSET_TEXTURE_SQUARE);
 	    sprites[key]->SetSize(200, 200);
 	    sprites[key]->SetTextureSize(200, 200);
+	    sprites[key]->SetLayer(static_cast<int>(Layers::GRID));
 
 	    int spriteWidth = sprites[key]->GetSize().x;
 	    int spriteHeight = sprites[key]->GetSize().y;
@@ -58,6 +68,8 @@ void GameScene::OnEnter(){
     sprites["cursor_cross"]->SetVisibleState(false);
     sprites["cursor_cross"]->SetPosition(0, 0);
     sprites["cursor_cross"]->SetCollisionState(false);
+    sprites["cursor_cross"]->SetAlpha(70);
+    sprites["cursor_cross"]->SetLayer(static_cast<int>(Layers::EFFECT));
     
     for (auto& [key, value] : sprites){
 	if (key.substr(0, 6) == "square"){
@@ -68,7 +80,6 @@ void GameScene::OnEnter(){
 	    value->OnStay = [&](std::shared_ptr<GameObject> cursorCrossObj){
 		sprites["cursor_cross"]->SetVisibleState(true);
 		sprites["cursor_cross"]->SetPosition(value->GetPosition().x, value->GetPosition().y);
-
 	    };
 
 	    value->OnClick = [&](){
@@ -99,6 +110,7 @@ void GameScene::OnEnter(){
 		    sprite->SetTextureSize(200, 200);
 		    sprite->SetPosition(value->GetPosition().x, value->GetPosition().y);
 		    sprite->SetCollisionState(false);
+		    sprite->SetLayer(static_cast<int>(Layers::SYMBOLS));
 		    pendingSprites.push_back({key, sprite});
 		}
 
@@ -114,6 +126,8 @@ void GameScene::OnEnter(){
     sprites["cursor"]->SetSize(20, 20);
     sprites["cursor"]->SetTextureSize(20, 20);
     sprites["cursor"]->SetQueryOnly(true);
+    sprites["cursor"]->SetLayer(static_cast<int>(Layers::CURSOR));
+    
 }
 
 void GameScene::Input(){
@@ -163,20 +177,13 @@ void GameScene::Render(){
 
     auto function = [&](){
 	
-	for (auto& [key, value] : sprites){
-	    if (key.substr(0, 6) == "square"){
-		value->Render();
+	for (int layer = 0; layer < static_cast<int>(Layers::COUNT); layer++){
+	    for (const auto& [key, value] : sprites){
+		if (value->GetLayer() == layer){
+		    value->Render();
+		}
 	    }
 	}
-
-	for (auto& [key, value] : sprites){
-	    if (key.substr(0, 5) == "cross"){
-		value->Render();
-	    }
-	}
-	
-	sprites["cursor_cross"]->Render(80);
-	sprites["cursor"]->Render();
     };
 
     RequestRender(function);

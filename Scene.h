@@ -45,6 +45,7 @@ protected:
     std::unordered_map<std::string, std::shared_ptr<Sprite>> sprites;
     SDL_Point mousePosition;
     bool mouseClick;
+    enum class Layers : int;
     Timer timer;
 
 };
