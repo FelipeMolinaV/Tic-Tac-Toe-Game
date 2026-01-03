@@ -69,6 +69,10 @@ bool Game::Init(){
 	return false;
     }
 
+    if (!SDL_HideCursor()){
+	std::cout << "Failed to hide cursor" << '\n';
+    }
+
     mGameState = GameState::GAME_STATE_RUNNING;
 
     return true; 

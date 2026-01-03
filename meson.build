@@ -33,7 +33,12 @@ sources = [
   'GameObject.cpp',
   'CollisionSystem.h',
   'Timer.h',
-  'Timer.cpp'
+  'Timer.cpp',
+  'AIController.h',
+  'AIController.cpp',
+  'GameLogic.h',
+  'GameLogic.cpp',
+  'Utils.h'
 ]
 
 executable(

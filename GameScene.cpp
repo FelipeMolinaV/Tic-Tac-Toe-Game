@@ -6,6 +6,8 @@
 #include "Asset.h"
 #include "Sprite.h"
 #include "GameState.h"
+#include "AIController.h"
+#include "Utils.h"
 
 enum class GameScene::Layers{
     BACKGROUND,
@@ -124,7 +126,7 @@ void GameScene::OnEnter(){
     
     sprites["cursor"] = RequestSprite(AssetID::ASSET_TEXTURE_CURSOR);
     sprites["cursor"]->SetSize(20, 20);
-    sprites["cursor"]->SetTextureSize(20, 20);
+    sprites["cursor"]->SetTextureSize(40, 40);
     sprites["cursor"]->SetQueryOnly(true);
     sprites["cursor"]->SetLayer(static_cast<int>(Layers::CURSOR));
     
@@ -153,6 +155,21 @@ void GameScene::Input(){
 		}
 	    }
 	}
+
+	if (event.type == SDL_EVENT_KEY_DOWN){
+	    if (event.key.key == SDLK_M){
+
+		/*
+		std::array<std::array<Cell, 3>, 3> matrix = {{
+			{{ {'X', }, {true, ' '}, {true, ' '} }},
+			{{ {false, 'X'}, {true, ' '}, {true, ' '} }},
+			{{ {true, ' '}, {false, 'O'}, {true, ' '} }}
+		    }};
+
+		*/
+	    }
+	}
+
     };
 
     RequestInput(function);
@@ -171,6 +188,11 @@ void GameScene::Update(){
 
     RequestCheckCollisions(collidables);
     
+    for (auto& pendingSprite : pendingSprites){
+	sprites[pendingSprite.first] = pendingSprite.second;
+    }
+
+    pendingSprites.clear();
 }
 
 void GameScene::Render(){
@@ -187,12 +209,6 @@ void GameScene::Render(){
     };
 
     RequestRender(function);
-
-    for (auto& pendingSprite : pendingSprites){
-	sprites[pendingSprite.first] = pendingSprite.second;
-    }
-
-    pendingSprites.clear();
 }
 
 void GameScene::OnExit(){
