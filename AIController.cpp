@@ -1,46 +1,49 @@
 #include "AIController.h"
 
 #include <algorithm>
+#include <iostream>
 
 AIController::AIController(std::function<bool(State)> isTerminal,
-			   std::function<int(State)> evaluate,
-			   std::function<std::vector<State>(State)> successors)
+			   std::function<int(State, int)> evaluate,
+			   std::function<std::vector<State>(State, bool)> successors)
 {
     mIsTerminal = isTerminal;
     mEvaluate = evaluate;
     mSuccessors = successors;
 };
 
-int AIController::Minimax(State state, bool isMaximizing){
+int AIController::Minimax(State state, int depth, bool isMaximizing){
 
     if (mIsTerminal(state)){
-	return mEvaluate(state);
+	return mEvaluate(state, depth);
     }
 
     if (isMaximizing){
 	int bestValue = -1000;
-	for (auto& s : mSuccessors(state)){
-	   bestValue = std::max(bestValue, Minimax(s, false));
+	for (auto& s : mSuccessors(state, isMaximizing)){
+	    int value = Minimax(s, depth + 1, !isMaximizing);	
+	    bestValue = std::max(bestValue, value);
 	}
 	return bestValue;
     }
     else {
 	int bestValue = 1000;
-	for (auto& s : mSuccessors(state)){
-	    bestValue = std::min(bestValue, Minimax(s, true));
+	for (auto& s : mSuccessors(state, isMaximizing)){
+	    int value = Minimax(s, depth + 1, !isMaximizing);	
+	    bestValue = std::min(bestValue, value);
 	}
 	return bestValue;
     }
 }
 
-std::pair<int, int> AIController::GetBestMove(const State& state){
+std::pair<int, int> AIController::GetBestMove(State state){
 
     State bestMove;
     int bestValue = -1000;
 
-    for (auto& s : mSuccessors(state)){
-	int value = Minimax(state, true);
-	if (value >= bestValue){
+    for (auto s : mSuccessors(state, true)){
+	int value = Minimax(s, 0, false);
+	if (value > bestValue){
 	    bestValue = value;
 	    bestMove = s;
 	}
@@ -48,10 +51,12 @@ std::pair<int, int> AIController::GetBestMove(const State& state){
 
     for (int row = 0; row < 3; row++){
 	for (int col = 0; col < 3; col++){
-	    if (state.board[row][col].symbol == bestMove.board[row][col].symbol) continue;
+	    if (state.board[row][col]->symbol == bestMove.board[row][col]->symbol) continue;
 	    return {row, col};
 	}
     }
+
+    return {-1, -1};
 }
 
 

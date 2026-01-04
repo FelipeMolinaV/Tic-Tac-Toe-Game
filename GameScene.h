@@ -7,13 +7,11 @@
 
 #include "Scene.h"
 #include "Sprite.h"
+#include "Utils.h"
+#include "GameLogic.h"
+#include "AIController.h"
 
 using key_sprite = std::pair<std::string, std::shared_ptr<Sprite>>;
-
-struct CellData{
-    bool state;
-    int gameObjectID; 
-};
 
 
 class GameScene : public Scene {
@@ -29,12 +27,14 @@ public:
 
 private:
 
-    std::array<std::array<std::shared_ptr<CellData>, 3>, 3> grid;
+    PlayerData mPlayer;
+    PlayerData mAdversary;
+    PlayerData mCurrentPlayer;
+    GameData mGameData;
     std::vector<key_sprite> pendingSprites;
-    bool playerTurn;
+    std::unique_ptr<AIController> mAIController;
 
     void GenerateGrid(int widthGap, int heightGap);
-
 };
 
 #endif

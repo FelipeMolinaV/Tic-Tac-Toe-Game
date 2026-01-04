@@ -6,15 +6,15 @@
 
 #include "Utils.h"
 
-char GetTicTacToeWinner(Board board, char playerSymbol, char enemySymbol);
+char GetTicTacToeWinner(Board board);
 
 // return IsTerminal
-std::function<bool(State)> GenerateTerminalFunction(char playerSymbol, char enemySymbol);
+std::function<bool(State)> GenerateTerminalFunction();
 
 // return Evaluate
-std::function<int(State)> GenerateEvaluateStateFunction(char maximizerSymbol, char minimizerSymbol);
+std::function<int(State, int)> GenerateEvaluateStateFunction(char maximizerSymbol, char minimizerSymbol);
 
 // return Successor
-std::function<std::vector<State>(State)> GenerateSuccessionFunction(char playerSymbol, char enemySymbol);
+std::function<std::vector<State>(State, bool)> GenerateSuccessionFunction(char playerSymbol, char enemySymbol);
 
 #endif
