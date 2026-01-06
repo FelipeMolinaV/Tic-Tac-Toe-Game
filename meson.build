@@ -38,7 +38,11 @@ sources = [
   'AIController.cpp',
   'GameLogic.h',
   'GameLogic.cpp',
-  'Utils.h'
+  'Utils.h',
+  'GameObjectFactory.h',
+  'GameObjectFactory.cpp',
+  'Scene.cpp',
+  'Renderable.h'
 ]
 
 executable(

@@ -31,6 +31,8 @@ private:
     PlayerData mAdversary;
     PlayerData mCurrentPlayer;
     GameData mGameData;
+    SDL_Point mousePosition;
+    Timer mTimer;
     std::vector<key_sprite> pendingSprites;
     std::unique_ptr<AIController> mAIController;
 

@@ -21,14 +21,14 @@ Texture::~Texture(){
 }
 
 
-void Texture::RenderTexture(SDL_Point& size, SDL_Point& position, Uint8 alpha){
+void Texture::RenderTexture(SDL_Point& size, SDL_Point& position, int alpha){
     SDL_FRect dstRect = { (float) position.x, (float) position.y, (float) size.x, (float) size.y};
-    SDL_SetTextureAlphaMod(mTexture, alpha);
+    SDL_SetTextureAlphaMod(mTexture, static_cast<Uint8>(alpha));
     SDL_RenderTexture(mRenderer, mTexture, nullptr, &dstRect);
 }
 
-void Texture::SetRenderAlpha(Uint8 alpha){
-    SDL_SetTextureAlphaMod(mTexture, alpha);
+void Texture::SetRenderAlpha(int alpha){
+    SDL_SetTextureAlphaMod(mTexture, static_cast<Uint8>(alpha));
 }
 
 void Texture::GetAssetInfo(){

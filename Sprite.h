@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Texture.h"
+#include "Renderable.h"
 #include "GameObject.h"
 
 class AssetFactory;
@@ -13,32 +14,33 @@ class Sprite : public GameObject {
 
 public:
 
-    Sprite(int gameObjectID, std::shared_ptr<Texture> texture);
-    Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size);
-    Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position);
-    Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer);
-    Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer, Uint8 alpha);
+    Sprite(std::shared_ptr<Texture> texture);
+    Sprite(std::shared_ptr<Texture> texture, SDL_Point size);
+    Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position);
+    Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer);
+    Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer, int alpha);
 
-    void Render();
+    void Render() override;
+    void SetLayer(int layer) override;
+    int GetLayer() override;
 
     void SetTexture(std::shared_ptr<Texture> texture);
     SDL_Point GetTextureSize();
     void SetTextureSize(int x, int y);
 
-    void SetLayer(int layer);
-    int GetLayer();
-
-    void SetAlpha(Uint8 alpha);
-    Uint8 GetAlpha();
+    void SetAlpha(int alpha);
+    int GetAlpha();
 
     void SetVisibleState(bool state);
     bool GetVisibleState();
+
+    static constexpr const char* TypeName = "Sprite";
 
 private:
 
     std::shared_ptr<Texture> mTexture; 
     SDL_Point mTextureSize;
-    Uint8 mAlpha;
+    int mAlpha;
     bool mVisibleState;
     int mLayer;
 

@@ -13,7 +13,6 @@
 #include "Texture.h"
 #include "AssetID.h"
 
-using asset_map = std::unordered_map<int, std::shared_ptr<Asset>>;
 
 class Game;
 class AssetFactory;
@@ -25,17 +24,20 @@ public:
     AssetManager(Game* game);
     void LoadAssets(std::string path);
 
-    template<typename T>
+    template <class T>
     std::shared_ptr<T> GetAsset(int assetId){
-	if (std::is_same_v<T, Texture>){
-	    std::shared_ptr<Texture> texture = std::dynamic_pointer_cast<Texture>(mAssets["texture"][assetId]);
-	    return texture; 
-	}
-    }
+	static_assert(std::is_base_of_v<Asset, T>, "T must inherit from Asset");
+	std::shared_ptr<Asset> asset = mAssets[assetId];
+	if (asset == nullptr){
+	    return nullptr;
+	}	
+	return std::static_pointer_cast<T>(asset);
+    };
+
 
 private:
 
-    std::unordered_map<std::string, asset_map> mAssets; 
+    std::unordered_map<int, std::shared_ptr<Asset>> mAssets; 
     std::unique_ptr<AssetFactory> mAssetFactory;
 
 };

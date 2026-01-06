@@ -29,6 +29,10 @@ bool SceneManager::SetScene(SceneType type){
 	    return false;
     }
 
+    currentScene->RequestGameStateChange = [&](GameState state){
+	mGame->SetGameState(state);
+    };
+
     currentScene->RequestInput = [&](std::function<void(SDL_Event)> function){
 	SDL_Event event;
 	while (SDL_PollEvent(&event)){
@@ -36,8 +40,8 @@ bool SceneManager::SetScene(SceneType type){
 	}
     };
 
-    currentScene->RequestChangeScene = [&](SceneType type){
-	this->SetScene(type);
+    currentScene->RequestSceneChange = [&](SceneType type){
+	nextScene = type;
     };
 
     currentScene->RequestRender = [&](std::function<void()> function){
@@ -47,25 +51,9 @@ bool SceneManager::SetScene(SceneType type){
 	SDL_RenderPresent(mGame->GetRenderer());
     };
 
-    currentScene->RequestTexture = [&](int assetId){
-	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetId);
+    currentScene->RequestTexture = [&](int assetID){
+	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetID);
 	return texture;
-    };
-
-    currentScene->RequestSprite = [&](int assetId){
-
-	// TODO: Replace this and add a GameObject Factory
-	static int gameObjectID;
-	gameObjectID++;
-
-	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetId);
-	std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(gameObjectID, texture); 
-
-	if (!sprite){
-	    std::cout << "Failed to return sprite" << '\n';
-	}
-
-	return sprite;
     };
 
     currentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){
@@ -77,9 +65,16 @@ bool SceneManager::SetScene(SceneType type){
 }
 
 void SceneManager::Tick(){
+
     currentScene->Input();
     currentScene->Update();
     currentScene->Render();
+
+    if (nextScene.has_value()){
+	currentScene->OnExit();
+	SetScene(nextScene.value());
+	nextScene.reset();
+    }
 }
 
 

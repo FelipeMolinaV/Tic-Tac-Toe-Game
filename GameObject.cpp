@@ -1,8 +1,7 @@
 #include "GameObject.h"
 #include <algorithm>
 
-GameObject::GameObject(int gameObjectID){
-    mGameObjectID = gameObjectID;
+GameObject::GameObject(){
     OnEnter = nullptr;
     OnExit = nullptr;
     OnStay = nullptr;
@@ -11,8 +10,7 @@ GameObject::GameObject(int gameObjectID){
     mCollidingGameObject = nullptr;
 }
 
-GameObject::GameObject(int gameObjectID, SDL_Point size){
-    mGameObjectID = gameObjectID;
+GameObject::GameObject(SDL_Point size){
     mSize = size;
     OnEnter = nullptr;
     OnExit = nullptr;
@@ -22,8 +20,7 @@ GameObject::GameObject(int gameObjectID, SDL_Point size){
     mCollidingGameObject = nullptr;
 }
 
-GameObject::GameObject(int gameObjectID, SDL_Point size, SDL_Point position){
-    mGameObjectID = gameObjectID;
+GameObject::GameObject(SDL_Point size, SDL_Point position){
     mSize = size;
     mPosition = position;
     OnEnter = nullptr;
@@ -36,6 +33,10 @@ GameObject::GameObject(int gameObjectID, SDL_Point size, SDL_Point position){
 
 int GameObject::GetGameObjectID(){
     return mGameObjectID;
+}
+
+void GameObject::SetGameObjectID(int gameObjectID){
+    mGameObjectID = gameObjectID;
 }
 
 std::vector<int> GameObject::GetCollisions(){

@@ -10,11 +10,14 @@ class GameObject{
 
 public:
 
-    GameObject(int gameObjectID);
-    GameObject(int gameObjectID, SDL_Point size);
-    GameObject(int gameObjectID, SDL_Point size, SDL_Point position);
+    GameObject();
+    GameObject(SDL_Point size);
+    GameObject(SDL_Point size, SDL_Point position);
+    virtual ~GameObject() = default;
 
     int GetGameObjectID();
+    void SetGameObjectID(int gameObjectID);
+
     void AddCollision(int gameObjectID);
     void RemoveCollision(int gameObjectID);
     std::vector<int> GetCollisions();
@@ -37,6 +40,12 @@ public:
     std::function<void(std::shared_ptr<GameObject>)> OnExit;
     std::function<void(std::shared_ptr<GameObject>)> OnStay;
     std::function<void()> OnClick;
+
+    // Virtual functions
+    // Renderable objects
+    virtual void Render() {};
+    virtual void SetLayer(int layer) {};
+    virtual int GetLayer() {return 0;};
 
 private:
 

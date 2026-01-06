@@ -4,7 +4,6 @@
 
 Game::Game(int w, int h) : width(w), height(h) {
     std::cout << "The game has been initialized" << '\n';
-    #include "SceneManager.h"
 }
 
 Game::~Game(){
@@ -51,16 +50,16 @@ bool Game::Init(){
     else {
 	mAssetManager->LoadAssets("assets/assets.json");
     }
+
+    mGameObjectFactory = std::make_shared<GameObjectFactory>();
+
+    if (mGameObjectFactory == nullptr){
+	std::cout << "Failed to initialize Game Object Factory" << '\n';
+	return false;
+    }
     
     mSceneManager = std::make_unique<SceneManager>(this); 
 
-    if (mSceneManager == nullptr){
-	std::cout << "Failed to initialize Scene Manager" << '\n';
-	return false;
-    }
-    else {
-	mSceneManager->SetScene(SceneType::SCENE_GAME);
-    }
     
     mKeystates = SDL_GetKeyboardState(nullptr);
 
@@ -75,6 +74,14 @@ bool Game::Init(){
 
     mGameState = GameState::GAME_STATE_RUNNING;
 
+    if (mSceneManager == nullptr){
+	std::cout << "Failed to initialize Scene Manager" << '\n';
+	return false;
+    }
+    else {
+	mSceneManager->SetScene(SceneType::SCENE_GAME);
+    }
+
     return true; 
 }
 
@@ -84,6 +91,10 @@ SDL_Renderer* Game::GetRenderer(){
 
 GameState Game::GetGameState(){
     return mGameState;
+}
+
+std::shared_ptr<GameObjectFactory> Game::GetGameObjectFactory(){
+    return mGameObjectFactory;
 }
 
 std::shared_ptr<AssetManager> Game::GetAssetManager(){

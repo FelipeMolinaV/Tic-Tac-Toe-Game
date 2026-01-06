@@ -4,6 +4,7 @@
 #include <SDL3/SDL.h>
 #include <vector>
 #include <memory>
+#include <optional>
 
 #include "Game.h"
 #include "Scene.h"
@@ -23,6 +24,7 @@ private:
 
     Game* mGame;
     std::unique_ptr<Scene> currentScene;
+    std::optional<SceneType> nextScene;
 };
 
 #endif

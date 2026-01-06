@@ -1,9 +1,7 @@
 #include "Sprite.h"
 #include <iostream>
 
-Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture) 
-    : 
-    GameObject(gameObjectID) 
+Sprite::Sprite(std::shared_ptr<Texture> texture) 
 {
     mTexture = texture; 
     mVisibleState = true;
@@ -11,9 +9,9 @@ Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture)
     mAlpha = 255;
 }
 
-Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size) 
+Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size) 
     : 
-    GameObject(gameObjectID, size) 
+    GameObject(size) 
 {
     mTexture = texture;
     mTextureSize = size; 
@@ -22,9 +20,9 @@ Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point siz
     mAlpha = 255;
 }
 
-Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position) 
+Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position) 
     : 
-    GameObject(gameObjectID, size, position) 
+    GameObject(size, position) 
 {
     mTexture = texture;
     mTextureSize = size;
@@ -33,9 +31,9 @@ Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point siz
     mAlpha = 255;
 }
 
-Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer) 
+Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer) 
     : 
-    GameObject(gameObjectID, size, position) 
+    GameObject(size, position) 
 {
     mTexture = texture;
     mTextureSize = size;
@@ -45,9 +43,9 @@ Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point siz
     mAlpha = 255;
 }
 
-Sprite::Sprite(int gameObjectID, std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer, Uint8 alpha) 
+Sprite::Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer, int alpha) 
     : 
-    GameObject(gameObjectID, size, position) 
+    GameObject(size, position) 
 {
     mTexture = texture;
     mTextureSize = size;
@@ -79,11 +77,11 @@ int Sprite::GetLayer(){
     return mLayer;
 }
 
-void Sprite::SetAlpha(Uint8 alpha){
+void Sprite::SetAlpha(int alpha){
     mAlpha = alpha;
 }
 
-Uint8 Sprite::GetAlpha(){
+int Sprite::GetAlpha(){
     return mAlpha;
 }
 
