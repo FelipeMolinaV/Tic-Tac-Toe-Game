@@ -145,7 +145,7 @@ std::pair<int, int> AIController::GetBestMove(Board board, bool isAlphaBetaPrunn
 
     for (auto s : mSuccessors(state, true)){
 	int value = (isAlphaBetaPrunning) ? 
-	    MinimaxAlphaBetaPrunning(s, 15, -1000, 1000, false) :
+	    MinimaxAlphaBetaPrunning(s, 100, -1000, 1000, false) :
 	    Minimax(s, 0, false);
 	if (value > bestValue){
 	    bestValue = value;

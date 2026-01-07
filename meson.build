@@ -49,7 +49,9 @@ sources = [
   'Font.h',
   'Font.cpp',
   'Text.h',
-  'Text.cpp'
+  'Text.cpp',
+  'CharacterTexture.h',
+  'CharacterTexture.cpp'
 ]
 
 executable(
