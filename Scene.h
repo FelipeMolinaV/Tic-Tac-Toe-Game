@@ -15,6 +15,8 @@
 #include "AssetID.h"
 #include "Sprite.h"
 #include "GameState.h"
+#include "Texture.h"
+#include "Font.h"
 
 template<typename T>
 using RequestGameObjectFunction = std::function<std::shared_ptr<T>(int)>;
@@ -29,9 +31,12 @@ public:
     std::function<void(SceneType)> RequestSceneChange;
     std::function<void(std::function<void(SDL_Event)>)> RequestInput;
     std::function<void(std::function<void()>)> RequestRender;
-    std::function<std::shared_ptr<Texture>(int)> RequestTexture;
     std::function<void(std::vector<std::shared_ptr<GameObject>>)> RequestCheckCollisions;
     std::function<void(GameState)> RequestGameStateChange;
+
+    std::function<std::shared_ptr<Texture>(int)> RequestTexture;
+    std::function<std::shared_ptr<Font>(int)> RequestFont;
+
 
     virtual void OnEnter() = 0;
     virtual void Input() = 0;

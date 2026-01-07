@@ -56,6 +56,10 @@ bool SceneManager::SetScene(SceneType type){
 	return texture;
     };
 
+    currentScene->RequestFont = [&](int assetID){
+	std::shared_ptr<Font> font = mGame->GetAssetManager()->GetAsset<Font>(assetID);
+	return font;
+    };
     currentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){
 	CheckCollisions(sprites);
     };
