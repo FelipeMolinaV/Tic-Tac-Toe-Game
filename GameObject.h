@@ -41,12 +41,6 @@ public:
     std::function<void(std::shared_ptr<GameObject>)> OnStay;
     std::function<void()> OnClick;
 
-    // Virtual functions
-    // Renderable objects
-    virtual void Render() {};
-    virtual void SetLayer(int layer) {};
-    virtual int GetLayer() {return 0;};
-
 private:
 
     int mGameObjectID;

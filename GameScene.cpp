@@ -7,6 +7,7 @@
 
 #include "Asset.h"
 #include "Sprite.h"
+#include "Text.h"
 #include "GameState.h"
 #include "AIController.h"
 #include "GameScene.h"
@@ -169,8 +170,32 @@ void GameScene::OnEnter(){
     cursor->SetQueryOnly(true);
 
     // Texts
+
+    std::string text = "Player"; 
+    //Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
     auto playerText = Create<Text>("player_text",
-				   Request
+				   RequestFont(AssetID::ASSET_FONT_GABATO),
+				   text,
+				   SDL_Color(255, 255, 255, 255), 
+				   SDL_Point(250, 50),
+				   SDL_Point(30, 40),
+				   static_cast<int>(Layers::GRID),
+				   255);
+
+    playerText->SetCollisionState(false);
+
+    text = "Enemy"; 
+    //Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
+    auto enemyText = Create<Text>("adversary_text",
+				   RequestFont(AssetID::ASSET_FONT_GABATO),
+				   text,
+				   SDL_Color(255, 255, 255, 255), 
+				   SDL_Point(250, 50),
+				   SDL_Point(1280 - 255 - 30, 40),
+				   static_cast<int>(Layers::GRID),
+				   255);
+
+    enemyText->SetCollisionState(false);
 }
 
 void GameScene::Input(){
@@ -242,7 +267,7 @@ void GameScene::Update(){
 	    mCurrentPlayer = mPlayer;
 	};
 
-	mTimer.StartTimer(2000, function);
+	mTimer.StartTimer(1000, function);
     }
 
     std::vector<std::shared_ptr<GameObject>> collidables;
@@ -262,11 +287,15 @@ void GameScene::Update(){
 void GameScene::Render(){
 
     auto function = [&](){
+
+	// TODO: Implement list with Renderable pointer
 	
+	auto renderableObjects = GetRenderableObjects();
+
 	for (int layer = 0; layer < static_cast<int>(Layers::COUNT); layer++){
-	    for (const auto& [key, value] : GetGameObjects<Sprite>()){
-		if (value->GetLayer() == layer){
-		    value->Render();
+	    for (auto& obj : renderableObjects){
+		if (obj->GetLayer() == layer){
+		    obj->Render();
 		}
 	    }
 	}
@@ -277,6 +306,6 @@ void GameScene::Render(){
 
 void GameScene::OnExit(){
     std::cout << "On exit Scene Game" << '\n';
-    ClearGameObjects();
+    ClearData();
 }
  

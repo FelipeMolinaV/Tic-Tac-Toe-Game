@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include <vector>
 #include <type_traits>
 #include <SDL3/SDL.h>
 
@@ -17,6 +18,7 @@
 #include "GameState.h"
 #include "Texture.h"
 #include "Font.h"
+#include "Renderable.h"
 
 template<typename T>
 using RequestGameObjectFunction = std::function<std::shared_ptr<T>(int)>;
@@ -47,15 +49,20 @@ public:
 private:
 
     std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<GameObject>>> pendingGameObjects;
+    std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<GameObject>>> mGameObjects;
+    std::vector<std::shared_ptr<Renderable>> mRenderableObjects;
 
 protected:
 
     Game* mGame;
-    std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<GameObject>>> mGameObjects;
 
     enum class Layers : int;
 
-    void ClearGameObjects();
+    void ClearData();
+
+    std::vector<std::shared_ptr<Renderable>> GetRenderableObjects();
+
+    void FlushPendingGameObjects();
 
     template <class T, class... Args>
     std::shared_ptr<T> Create(std::string_view key, Args&&... args){
@@ -102,12 +109,12 @@ protected:
 	return nullptr;
     }
 
+
     template <class T>
     std::unordered_map<std::string, std::shared_ptr<GameObject>> GetGameObjects(){
 	return mGameObjects[T::TypeName];
     }
 
-    void FlushPendingGameObjects();
 
 };
 

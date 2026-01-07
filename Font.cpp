@@ -1,6 +1,7 @@
 #include "Font.h"
 
 #include <stdexcept>
+#include <iostream>
 
 Font::Font(SDL_Renderer* renderer, const std::string& path, int pxSize){
 
@@ -17,6 +18,7 @@ Font::Font(SDL_Renderer* renderer, const std::string& path, int pxSize){
 };
 
 Font::~Font(){
+    std::cout << "DELETED" << std::endl;
     TTF_CloseFont(mTTF);
 }
 

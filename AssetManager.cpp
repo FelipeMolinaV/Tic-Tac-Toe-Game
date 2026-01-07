@@ -28,15 +28,6 @@ void AssetManager::LoadAssets(std::string path){
 	    mAssets[assetId] = mAssetFactory->CreateAsset(asset); 
 	}
     }
-
-    /*
-    auto& textures = data["textures"];
-
-    for (auto& textureInfo : textures){
-	int assetId = textureInfo.at("asset_id").get<int>();
-	mAssets[assetId] = mAssetFactory->CreateAsset(textureInfo); 
-    }
-    */
 }
 
 

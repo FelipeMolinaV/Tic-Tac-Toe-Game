@@ -31,7 +31,7 @@
 			"type" : "font",
 			"asset_id" : 5,
 			"path" : "assets/fonts/Gabato.ttf",
-			"pixel_size" : 24
+			"pixel_size" : 64
 		}
 	]
 }

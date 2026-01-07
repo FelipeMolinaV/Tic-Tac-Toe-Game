@@ -1,6 +1,7 @@
 #include "Text.h"
 
 Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg){
+    mTexture = nullptr;
     mFont = font;
     mText = text;
     mForegroundColor = fg;
@@ -11,6 +12,7 @@ Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg){
 Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size)
     : GameObject(size)
 {
+    mTexture = nullptr;
     mFont = font;
     mText = text;
     mForegroundColor = fg;
@@ -21,6 +23,7 @@ Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Poin
 Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position)
     : GameObject(size, position)
 {
+    mTexture = nullptr;
     mFont = font;
     mText = text;
     mForegroundColor = fg;
@@ -31,6 +34,7 @@ Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Poin
 Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer)
     : GameObject(size, position)
 {
+    mTexture = nullptr;
     mFont = font;
     mText = text;
     mForegroundColor = fg;
@@ -42,6 +46,7 @@ Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Poin
 Text::Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha)
     : GameObject(size, position)
 {
+    mTexture = nullptr;
     mFont = font;
     mText = text;
     mForegroundColor = fg;
