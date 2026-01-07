@@ -5,6 +5,7 @@ IF NOT EXIST builddir (
     echo "Copiando SDL3.dll..."
     copy /Y "C:\libs\SDL3-3.2.26\x86_64-w64-mingw32\bin\SDL3.dll" "builddir\"
     copy /Y "C:\libs\SDL3_image-3.2.4\x86_64-w64-mingw32\bin\SDL3_image.dll" "builddir\"
+    copy /Y "C:\libs\SDL3_ttf-3.2.2\x86_64-w64-mingw32\bin\SDL3_ttf.dll" "builddir\"
 )
 
 echo "compilando..."

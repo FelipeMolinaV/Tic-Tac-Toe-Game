@@ -1,3 +1,4 @@
+#include <SDL3_ttf/SDL_ttf.h>
 #include "Game.h"
 #include "SceneManager.h"
 #include "SceneType.h"
@@ -17,6 +18,11 @@ bool Game::Init(){
 
     if (!SDL_Init(SDL_INIT_VIDEO)){
 	std::cout << "Failed to initialized SDL3" << '\n';
+	return false;
+    }
+
+    if (!TTF_Init()){
+	std::cout << "Failed to initialze TTF" << '\n';
 	return false;
     }
 

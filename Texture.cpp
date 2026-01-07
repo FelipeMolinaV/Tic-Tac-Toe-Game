@@ -27,9 +27,6 @@ void Texture::RenderTexture(SDL_Point& size, SDL_Point& position, int alpha){
     SDL_RenderTexture(mRenderer, mTexture, nullptr, &dstRect);
 }
 
-void Texture::SetRenderAlpha(int alpha){
-    SDL_SetTextureAlphaMod(mTexture, static_cast<Uint8>(alpha));
-}
 
 void Texture::GetAssetInfo(){
 }

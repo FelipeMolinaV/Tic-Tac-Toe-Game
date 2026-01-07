@@ -10,7 +10,7 @@
 
 class AssetFactory;
 
-class Sprite : public GameObject {
+class Sprite : public GameObject, public Renderable {
 
 public:
 
@@ -20,19 +20,21 @@ public:
     Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer);
     Sprite(std::shared_ptr<Texture> texture, SDL_Point size, SDL_Point position, int layer, int alpha);
 
-    void Render() override;
-    void SetLayer(int layer) override;
-    int GetLayer() override;
-
+    // sprite's functions
     void SetTexture(std::shared_ptr<Texture> texture);
     SDL_Point GetTextureSize();
     void SetTextureSize(int x, int y);
 
-    void SetAlpha(int alpha);
-    int GetAlpha();
+    // Renderable's virtual functions
+    void Render() override;
+    void SetLayer(int layer) override;
+    int GetLayer() override;
 
-    void SetVisibleState(bool state);
-    bool GetVisibleState();
+    void SetAlpha(int alpha) override;
+    int GetAlpha() override;
+
+    void SetVisibleState(bool state) override;
+    bool GetVisibleState() override;
 
     static constexpr const char* TypeName = "Sprite";
 
