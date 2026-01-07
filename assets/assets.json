@@ -25,5 +25,13 @@
 			"asset_id" : 4,
 			"path" : "assets/textures/circle.png"
 		}
+	],
+	"fonts" : [
+		{
+			"type" : "font",
+			"asset_id" : 5,
+			"path" : "assets/fonts/Gabato.ttf",
+			"pixel_size" : 24
+		}
 	]
 }

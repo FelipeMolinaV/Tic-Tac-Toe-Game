@@ -16,6 +16,8 @@ public:
 
     void RenderText(SDL_Texture*& texture, SDL_Point& size, SDL_Point& position, std::string& text, size_t length, SDL_Color foregroundColor, int alpha);   
 
+    void GetAssetInfo() override;
+
 private:
 
     TTF_Font* mTTF;

@@ -22,14 +22,21 @@ void AssetManager::LoadAssets(std::string path){
     json data = json::parse(file);
     file.close();
 
-    // TODO: Make dynamic
+    for (auto& [category, assets] : data.items()){
+	for (auto& asset : assets){
+	    int assetId = asset.at("asset_id").get<int>();
+	    mAssets[assetId] = mAssetFactory->CreateAsset(asset); 
+	}
+    }
 
+    /*
     auto& textures = data["textures"];
 
     for (auto& textureInfo : textures){
 	int assetId = textureInfo.at("asset_id").get<int>();
 	mAssets[assetId] = mAssetFactory->CreateAsset(textureInfo); 
     }
+    */
 }
 
 

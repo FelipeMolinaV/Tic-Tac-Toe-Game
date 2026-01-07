@@ -167,6 +167,10 @@ void GameScene::OnEnter(){
 
     cursor->SetTextureSize(40, 40);
     cursor->SetQueryOnly(true);
+
+    // Texts
+    auto playerText = Create<Text>("player_text",
+				   Request
 }
 
 void GameScene::Input(){

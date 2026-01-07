@@ -11,6 +11,7 @@
 #include "Game.h"
 #include "AssetFactory.h"
 #include "Texture.h"
+#include "Font.h"
 #include "AssetID.h"
 
 

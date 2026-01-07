@@ -40,3 +40,7 @@ void Font::RenderText(SDL_Texture*& texture, SDL_Point& size, SDL_Point& positio
     SDL_SetTextureAlphaMod(texture, static_cast<Uint8>(alpha));
     SDL_RenderTexture(mRenderer, texture, nullptr, &dstRect);
 }
+
+void Font::GetAssetInfo(){
+    // TODO: Implement
+}
