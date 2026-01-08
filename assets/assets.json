@@ -24,12 +24,17 @@
 			"type" : "texture",
 			"asset_id" : 4,
 			"path" : "assets/textures/circle.png"
+		},
+		{
+			"type" : "texture",
+			"asset_id" : 5,
+			"path" : "assets/textures/background.png"
 		}
 	],
 	"font_atlas" : [
 		{
 			"type" : "font_atlas",
-			"asset_id" : 5,
+			"asset_id" : 6,
 			"path" : "assets/fonts/Gabato.ttf",
 			"pixel_size" : 64,
 			"red" : 255,

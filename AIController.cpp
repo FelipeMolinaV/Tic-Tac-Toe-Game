@@ -39,7 +39,7 @@ int AIController::Minimax(State state, int depth, bool isMaximizing){
 
 int AIController::MinimaxAlphaBetaPrunning(State state, int depth, int alpha, int beta, bool isMaximizing){
 
-    if (depth == 0 || mIsTerminal(state)){
+    if (mIsTerminal(state)){
 	return mEvaluate(state, depth);
     }
 
@@ -47,7 +47,7 @@ int AIController::MinimaxAlphaBetaPrunning(State state, int depth, int alpha, in
 	int bestValue = -1000;
 	for (auto& s : mSuccessors(state, isMaximizing)){
 
-	    int value = MinimaxAlphaBetaPrunning(s, depth - 1, alpha, beta, !isMaximizing);	
+	    int value = MinimaxAlphaBetaPrunning(s, depth + 1, alpha, beta, !isMaximizing);	
 	    bestValue = std::max(bestValue, value);
 	    alpha =  std::max(bestValue, alpha);
 
@@ -60,7 +60,7 @@ int AIController::MinimaxAlphaBetaPrunning(State state, int depth, int alpha, in
     else {
 	int bestValue = 1000;
 	for (auto& s : mSuccessors(state, isMaximizing)){
-	    int value = MinimaxAlphaBetaPrunning(s, depth -1, alpha, beta, !isMaximizing);	
+	    int value = MinimaxAlphaBetaPrunning(s, depth + 1, alpha, beta, !isMaximizing);	
 	    bestValue = std::min(bestValue, value);
 	    beta = std::min(bestValue, beta);
 
@@ -145,7 +145,7 @@ std::pair<int, int> AIController::GetBestMove(Board board, bool isAlphaBetaPrunn
 
     for (auto s : mSuccessors(state, true)){
 	int value = (isAlphaBetaPrunning) ? 
-	    MinimaxAlphaBetaPrunning(s, 100, -1000, 1000, false) :
+	    MinimaxAlphaBetaPrunning(s, 0, -1000, 1000, false) :
 	    Minimax(s, 0, false);
 	if (value > bestValue){
 	    bestValue = value;

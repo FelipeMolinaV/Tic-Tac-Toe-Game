@@ -143,6 +143,16 @@ void GameScene::OnEnter(){
 	GenerateEvaluateStateFunction(mAdversary.symbol, mPlayer.symbol),
 	GenerateSuccessionFunction(mAdversary.symbol, mPlayer.symbol));
 
+    // Background
+    auto background = Create<Sprite>("background",
+				     RequestTexture(AssetID::ASSET_TEXTURE_BACKGROUND),
+				     SDL_Point(1280, 720),
+				     SDL_Point(0, 0),
+				     static_cast<int>(Layers::BACKGROUND),
+				     255);
+
+    background->SetCollisionState(false);
+
     // Create sprite pieces
     auto piecePreview = Create<Sprite>("piece_preview", 
 				       RequestTexture(AssetID::ASSET_TEXTURE_CROSS), 
@@ -196,6 +206,7 @@ void GameScene::OnEnter(){
 				   255);
 
     enemyText->SetCollisionState(false);
+
 }
 
 void GameScene::Input(){
