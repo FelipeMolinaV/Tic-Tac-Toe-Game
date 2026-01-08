@@ -16,6 +16,10 @@ AssetManager::AssetManager(Game* game){
     mAssetFactory = std::make_unique<AssetFactory>(game);
 }
 
+AssetManager::~AssetManager(){
+    mAssets.clear();
+}
+
 void AssetManager::LoadAssets(std::string path){
 
     std::ifstream file(path);	
@@ -29,5 +33,6 @@ void AssetManager::LoadAssets(std::string path){
 	}
     }
 }
+
 
 

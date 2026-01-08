@@ -17,7 +17,7 @@
 #include "Sprite.h"
 #include "GameState.h"
 #include "Texture.h"
-#include "Font.h"
+#include "FontAtlas.h"
 #include "Renderable.h"
 
 template<typename T>
@@ -37,7 +37,7 @@ public:
     std::function<void(GameState)> RequestGameStateChange;
 
     std::function<std::shared_ptr<Texture>(int)> RequestTexture;
-    std::function<std::shared_ptr<Font>(int)> RequestFont;
+    std::function<std::shared_ptr<FontAtlas>(int)> RequestFontAtlas;
 
 
     virtual void OnEnter() = 0;

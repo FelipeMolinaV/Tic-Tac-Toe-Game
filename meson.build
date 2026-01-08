@@ -46,12 +46,12 @@ sources = [
   'GameObjectFactory.cpp',
   'Scene.cpp',
   'Renderable.h',
-  'Font.h',
-  'Font.cpp',
-  'Text.h',
-  'Text.cpp',
   'CharacterTexture.h',
-  'CharacterTexture.cpp'
+  'CharacterTexture.cpp',
+  'FontAtlas.h',
+  'FontAtlas.cpp',
+  'Text.h',
+  'Text.cpp'
 ]
 
 executable(

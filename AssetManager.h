@@ -12,6 +12,7 @@
 #include "AssetFactory.h"
 #include "Texture.h"
 #include "Font.h"
+#include "FontAtlas.h"
 #include "AssetID.h"
 
 
@@ -23,6 +24,7 @@ class AssetManager{
 public:
 
     AssetManager(Game* game);
+    ~AssetManager();
     void LoadAssets(std::string path);
 
     template <class T>

@@ -1,7 +1,7 @@
 #include "AssetFactory.h"
 
 #include "Texture.h"
-#include "Font.h"
+#include "FontAtlas.h"
 
 AssetFactory::AssetFactory(Game* game) : mGame(game) {};
 
@@ -15,12 +15,19 @@ std::shared_ptr<Asset> AssetFactory::CreateAsset(json& data){
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>(mGame->GetRenderer(), path);
 	return texture; 
     }
-    else if (type == "font"){
+    else if (type == "font_atlas"){
 
 	std::string path = data.at("path").get<std::string>();
 	int pixelSize = data.at("pixel_size").get<int>();
-	std::shared_ptr<Font> font = std::make_shared<Font>(mGame->GetRenderer(), path, pixelSize);
-	return font;
+	Uint8 red = data.at("red").get<Uint8>();
+	Uint8 green = data.at("green").get<Uint8>();
+	Uint8 blue = data.at("blue").get<Uint8>();
+	Uint8 alpha = data.at("alpha").get<Uint8>();
+
+	SDL_Color fg = {red, green, blue, alpha};
+
+	std::shared_ptr<FontAtlas> fontAtlas = std::make_shared<FontAtlas>(mGame->GetRenderer(), path, pixelSize, fg);
+	return fontAtlas;
     }
 
     return nullptr;

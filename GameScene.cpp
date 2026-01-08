@@ -174,7 +174,7 @@ void GameScene::OnEnter(){
     std::string text = "Player"; 
     //Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
     auto playerText = Create<Text>("player_text",
-				   RequestFont(AssetID::ASSET_FONT_GABATO),
+				   RequestFontAtlas(AssetID::ASSET_FONT_ATLAS_GABATO),
 				   text,
 				   SDL_Color(255, 255, 255, 255), 
 				   SDL_Point(250, 50),
@@ -187,7 +187,7 @@ void GameScene::OnEnter(){
     text = "Enemy"; 
     //Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
     auto enemyText = Create<Text>("adversary_text",
-				   RequestFont(AssetID::ASSET_FONT_GABATO),
+				   RequestFontAtlas(AssetID::ASSET_FONT_ATLAS_GABATO),
 				   text,
 				   SDL_Color(255, 255, 255, 255), 
 				   SDL_Point(250, 50),

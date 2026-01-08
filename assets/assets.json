@@ -26,12 +26,16 @@
 			"path" : "assets/textures/circle.png"
 		}
 	],
-	"fonts" : [
+	"font_atlas" : [
 		{
-			"type" : "font",
+			"type" : "font_atlas",
 			"asset_id" : 5,
 			"path" : "assets/fonts/Gabato.ttf",
-			"pixel_size" : 64
+			"pixel_size" : 64,
+			"red" : 255,
+			"green" : 255,
+			"blue" : 255,
+			"alpha" : 255
 		}
 	]
 }

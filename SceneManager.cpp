@@ -7,6 +7,7 @@
 
 #include "GameState.h"
 #include "Texture.h"
+#include "FontAtlas.h"
 #include "GameObject.h"
 #include "CollisionSystem.h"
 
@@ -56,9 +57,9 @@ bool SceneManager::SetScene(SceneType type){
 	return texture;
     };
 
-    currentScene->RequestFont = [&](int assetID){
-	std::shared_ptr<Font> font = mGame->GetAssetManager()->GetAsset<Font>(assetID);
-	return font;
+    currentScene->RequestFontAtlas = [&](int assetID){
+	std::shared_ptr<FontAtlas> fontAtlas = mGame->GetAssetManager()->GetAsset<FontAtlas>(assetID);
+	return fontAtlas;
     };
     currentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){
 	CheckCollisions(sprites);

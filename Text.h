@@ -7,19 +7,18 @@
 
 #include "GameObject.h"
 #include "Renderable.h"
-#include "Font.h"
+#include "FontAtlas.h"
 
 class Text : public GameObject, public Renderable {
 
 public:
 
-    Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg);
-    Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size);
-    Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position);
-    Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer);
-    Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
-    ~Text();
-    
+    Text(std::shared_ptr<FontAtlas> fontAtlas, std::string& text, SDL_Color fg);
+    Text(std::shared_ptr<FontAtlas> fontAtlas, std::string& text, SDL_Color fg, SDL_Point size);
+    Text(std::shared_ptr<FontAtlas> fontAtlas, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position);
+    Text(std::shared_ptr<FontAtlas> fontAtlas, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer);
+    Text(std::shared_ptr<FontAtlas> fontAtlas, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
+
     // Text's functions
     void SetText(std::string& text);
     std::string& GetText();
@@ -39,9 +38,7 @@ public:
 
 private:
 
-    SDL_Texture* mTexture;
-
-    std::shared_ptr<Font> mFont;
+    std::shared_ptr<FontAtlas> mFontAtlas;
     std::string mText;
     SDL_Color mForegroundColor;
     bool mVisibleState;

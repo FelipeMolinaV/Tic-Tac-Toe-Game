@@ -11,7 +11,7 @@ public:
     CharacterTexture(SDL_Renderer* mRenderer, SDL_Surface* surface);
     ~CharacterTexture();
 
-    void RenderCharacterTexture(SDL_Point& size, SDL_Point& position, int alpha);
+    void RenderCharacterTexture(SDL_FRect destinationRect, int alpha);
 
 private:
 
