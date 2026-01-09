@@ -56,7 +56,9 @@ sources = [
   'Text.h',
   'Text.cpp',
   'Audio.h',
-  'Audio.cpp'
+  'Audio.cpp',
+  'AudioSource.h',
+  'AudioSource.cpp'
 ]
 
 executable(

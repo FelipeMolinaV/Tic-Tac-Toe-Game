@@ -6,6 +6,8 @@
 #include <functional>
 #include <memory>
 
+
+// TODO: Make more easy to active or deactivate all the collision feature
 class GameObject{
 
 public:
