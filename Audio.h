@@ -13,8 +13,7 @@ public:
     Audio(MIX_Mixer* mixer, std::string path);
     ~Audio();
 
-    // TODO: Add parameters to set the way the sound is playing
-    void PlayAudio();
+    void PlayAudio(int volume, int loops, int fadeIn);
 
     void GetAssetInfo() override;
 
@@ -22,6 +21,7 @@ private:
 
     MIX_Track* mTrack;
     MIX_Audio* mAudio;
+    SDL_PropertiesID mProperties;
 };
 
 #endif 
