@@ -29,12 +29,22 @@
 			"type" : "texture",
 			"asset_id" : 5,
 			"path" : "assets/textures/background.png"
+		},
+		{
+			"type" : "texture",
+			"asset_id" : 6,
+			"path" : "assets/textures/heart_green.png"
+		},
+		{
+			"type" : "texture",
+			"asset_id" : 7,
+			"path" : "assets/textures/heart_red.png"
 		}
 	],
 	"font_atlas" : [
 		{
 			"type" : "font_atlas",
-			"asset_id" : 6,
+			"asset_id" : 8,
 			"path" : "assets/fonts/Gabato.ttf",
 			"pixel_size" : 64,
 			"red" : 255,

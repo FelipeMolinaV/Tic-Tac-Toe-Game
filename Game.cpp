@@ -10,6 +10,7 @@ Game::Game(int w, int h) : width(w), height(h) {
 Game::~Game(){
     SDL_DestroyWindow(mWindow);
     SDL_DestroyRenderer(mRenderer);
+    MIX_DestroyMixer(mMixer);
     delete[] mKeystates;
     SDL_Quit();
 }
@@ -17,12 +18,23 @@ Game::~Game(){
 bool Game::Init(){
 
     if (!SDL_Init(SDL_INIT_VIDEO)){
-	std::cout << "Failed to initialized SDL3" << '\n';
+	std::cout << "Failed to initialized SDL3 library" << '\n';
 	return false;
     }
 
     if (!TTF_Init()){
-	std::cout << "Failed to initialze TTF" << '\n';
+	std::cout << "Failed to initialize SDL_ttf library" << '\n';
+	return false;
+    }
+
+    if (!MIX_Init()){
+	std::cout << "Failed to initialize SDL_mixer library" << '\n'; 
+    }
+
+    mMixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, nullptr);
+
+    if (mMixer == nullptr){
+	std::cout << "Failed to create a mixer device" << '\n';
 	return false;
     }
 

@@ -15,7 +15,8 @@
 
 enum class GameScene::Layers{
     BACKGROUND,
-    GRID,
+    UI,
+    BOARD,
     EFFECT,
     SYMBOLS,
     CURSOR,
@@ -45,7 +46,7 @@ void GameScene::GenerateGrid(int widthGap, int heightGap){
 					 RequestTexture(AssetID::ASSET_TEXTURE_SQUARE), 
 				         SDL_Point(200, 200), 
 					 SDL_Point(0, 0),
-					 static_cast<int>(Layers::GRID),
+					 static_cast<int>(Layers::BOARD),
 					 255);
 	    square->SetTextureSize(200, 200);
 
@@ -116,7 +117,6 @@ void GameScene::GenerateGrid(int widthGap, int heightGap){
 	    square->OnExit = [this, square](std::shared_ptr<GameObject> cursorCrossObj){
 		GetGameObject<Sprite>("piece_preview")->SetVisibleState(false);
 	    };
-
 
 	    i++;
 	    colIncrement += widthGap;
@@ -189,7 +189,7 @@ void GameScene::OnEnter(){
 				   SDL_Color(255, 255, 255, 255), 
 				   SDL_Point(250, 50),
 				   SDL_Point(30, 40),
-				   static_cast<int>(Layers::GRID),
+				   static_cast<int>(Layers::BOARD),
 				   255);
 
     playerText->SetCollisionState(false);
@@ -202,7 +202,7 @@ void GameScene::OnEnter(){
 				   SDL_Color(255, 255, 255, 255), 
 				   SDL_Point(250, 50),
 				   SDL_Point(1280 - 255 - 30, 40),
-				   static_cast<int>(Layers::GRID),
+				   static_cast<int>(Layers::BOARD),
 				   255);
 
     enemyText->SetCollisionState(false);
