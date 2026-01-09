@@ -61,6 +61,12 @@ bool SceneManager::SetScene(SceneType type){
 	std::shared_ptr<FontAtlas> fontAtlas = mGame->GetAssetManager()->GetAsset<FontAtlas>(assetID);
 	return fontAtlas;
     };
+
+    currentScene->RequestAudio = [&](int assetID){
+	std::shared_ptr<Audio> fontAtlas = mGame->GetAssetManager()->GetAsset<Audio>(assetID);
+	return fontAtlas;
+    };
+
     currentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){
 	CheckCollisions(sprites);
     };

@@ -24,6 +24,7 @@ public:
     void Run();
 
     SDL_Renderer* GetRenderer();
+    MIX_Mixer* GetMixer();
     GameState GetGameState();
     void SetGameState(GameState state);
     const bool* GetKeystates();

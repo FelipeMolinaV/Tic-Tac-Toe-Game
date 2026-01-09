@@ -2,6 +2,7 @@
 
 #include "Texture.h"
 #include "FontAtlas.h"
+#include "Audio.h"
 
 AssetFactory::AssetFactory(Game* game) : mGame(game) {};
 
@@ -28,6 +29,13 @@ std::shared_ptr<Asset> AssetFactory::CreateAsset(json& data){
 
 	std::shared_ptr<FontAtlas> fontAtlas = std::make_shared<FontAtlas>(mGame->GetRenderer(), path, pixelSize, fg);
 	return fontAtlas;
+    }
+    else if (type == "audio"){
+
+	std::string path = data.at("path").get<std::string>();
+
+	std::shared_ptr<Audio> audio = std::make_shared<Audio>(mGame->GetMixer(), path);
+	return audio;
     }
 
     return nullptr;

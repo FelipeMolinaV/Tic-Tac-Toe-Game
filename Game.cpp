@@ -107,6 +107,10 @@ SDL_Renderer* Game::GetRenderer(){
     return mRenderer;
 }
 
+MIX_Mixer* Game::GetMixer(){
+    return mMixer;
+}
+
 GameState Game::GetGameState(){
     return mGameState;
 }

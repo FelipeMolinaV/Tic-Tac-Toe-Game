@@ -38,6 +38,7 @@ public:
 
     std::function<std::shared_ptr<Texture>(int)> RequestTexture;
     std::function<std::shared_ptr<FontAtlas>(int)> RequestFontAtlas;
+    std::function<std::shared_ptr<Audio>(int)> RequestAudio;
 
 
     virtual void OnEnter() = 0;
