@@ -1,11 +1,13 @@
-#include "SceneManager.h"
-#include "GameScene.h"
 #include <iostream>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
 
+
+#include "SceneManager.h"
 #include "GameState.h"
+#include "GameScene.h"
+#include "TestScene.h"
 #include "Texture.h"
 #include "FontAtlas.h"
 #include "GameObject.h"
@@ -25,6 +27,9 @@ bool SceneManager::SetScene(SceneType type){
     switch (type){
 	case SceneType::SCENE_GAME:
 	    currentScene = std::make_unique<GameScene>(mGame); 
+	    break;
+	case SceneType::SCENE_TEST:
+	    currentScene = std::make_unique<TestScene>(mGame);
 	    break;
 	default:
 	    return false;
@@ -46,8 +51,8 @@ bool SceneManager::SetScene(SceneType type){
     };
 
     currentScene->RequestRender = [&](std::function<void()> function){
-	SDL_RenderClear(mGame->GetRenderer());
 	SDL_SetRenderDrawColor(mGame->GetRenderer(), 0, 0, 0, 255);
+	SDL_RenderClear(mGame->GetRenderer());
 	function();
 	SDL_RenderPresent(mGame->GetRenderer());
     };
@@ -63,8 +68,8 @@ bool SceneManager::SetScene(SceneType type){
     };
 
     currentScene->RequestAudio = [&](int assetID){
-	std::shared_ptr<Audio> fontAtlas = mGame->GetAssetManager()->GetAsset<Audio>(assetID);
-	return fontAtlas;
+	std::shared_ptr<Audio> audio = mGame->GetAssetManager()->GetAsset<Audio>(assetID);
+	return audio;
     };
 
     currentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){

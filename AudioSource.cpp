@@ -5,6 +5,10 @@
 
 AudioSource::AudioSource(std::shared_ptr<Audio> audio){
     mAudio = audio;
+    mVolume = 100;
+    mFadeIn = 0;
+    mLoopState = false;
+    SetCollisionState(false);
 }
 
 AudioSource::AudioSource(std::shared_ptr<Audio> audio, int volume){
@@ -15,6 +19,7 @@ AudioSource::AudioSource(std::shared_ptr<Audio> audio, int volume){
 
     mAudio = audio;
     mVolume = volume;
+    SetCollisionState(false);
 }
 
 AudioSource::AudioSource(std::shared_ptr<Audio> audio, int volume, bool loopState){
@@ -26,6 +31,7 @@ AudioSource::AudioSource(std::shared_ptr<Audio> audio, int volume, bool loopStat
     mAudio = audio;
     mVolume = volume;
     mLoopState = loopState;
+    SetCollisionState(false);
 }
 
 AudioSource::AudioSource(std::shared_ptr<Audio> audio, int volume, bool loopState, int fadeIn){
@@ -38,6 +44,7 @@ AudioSource::AudioSource(std::shared_ptr<Audio> audio, int volume, bool loopStat
     mVolume = volume;
     mLoopState = loopState;
     mFadeIn = fadeIn;
+    SetCollisionState(false);
 }
 
 AudioSource::AudioSource(std::shared_ptr<Audio> audio, 
@@ -57,6 +64,7 @@ AudioSource::AudioSource(std::shared_ptr<Audio> audio,
     mVolume = volume;
     mLoopState = loopState;
     mFadeIn = fadeIn;
+    SetCollisionState(false);
 }
 
 void AudioSource::Play(){

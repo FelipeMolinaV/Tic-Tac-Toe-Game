@@ -10,6 +10,7 @@
 #include "Utils.h"
 #include "GameLogic.h"
 #include "AIController.h"
+#include "RectLayout.h"
 
 using key_sprite = std::pair<std::string, std::shared_ptr<Sprite>>;
 

@@ -97,7 +97,7 @@ bool Game::Init(){
 	return false;
     }
     else {
-	mSceneManager->SetScene(SceneType::SCENE_GAME);
+	mSceneManager->SetScene(SceneType::SCENE_TEST);
     }
 
     return true; 

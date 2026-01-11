@@ -19,8 +19,7 @@ void Scene::FlushPendingGameObjects(){
 	    if (type == "Sprite"){
 		mRenderableObjects.push_back(static_pointer_cast<Sprite>(gameObject));
 	    }
-
-	    if (type == "Text"){
+	    else if (type == "Text"){
 		mRenderableObjects.push_back(static_pointer_cast<Text>(gameObject));
 	    }
 

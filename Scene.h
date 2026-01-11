@@ -24,6 +24,7 @@ template<typename T>
 using RequestGameObjectFunction = std::function<std::shared_ptr<T>(int)>;
 
 class Scene{
+
 public:
 
     inline Scene(Game* game) : mGame(game) {}
@@ -78,14 +79,13 @@ protected:
 	pendingGameObjects[T::TypeName][std::string(key)] =  newGameObject;
 
 	std::cout << "-------------" << std::endl;
+	std::cout << "TYPE: " << T::TypeName << std::endl;
 	std::cout << "ID  : " << newGameObject->GetGameObjectID() << std::endl;
 	std::cout << "KEY : " << key << std::endl;
 	std::cout << "SIZE: " << newGameObject->GetSize().x << " " << newGameObject->GetSize().y << std::endl; 
 	std::cout << "POS : " << newGameObject->GetPosition().x << " " << std::endl;
 	std::cout << "COLLISION STATE: " << newGameObject->GetCollisionState() << std::endl;
 	std::cout << "QUERY ONLY: " << newGameObject->IsQueryOnly() << std::endl;
-	std::cout << "LAYER     : " << newGameObject->GetLayer() << std::endl;
-	std::cout << "ALPHA     : " << newGameObject->GetAlpha() << std::endl;
 
 	return newGameObject;
     }

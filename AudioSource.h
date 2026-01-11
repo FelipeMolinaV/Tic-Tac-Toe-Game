@@ -7,7 +7,7 @@
 #include "Audio.h"
 #include "GameObject.h"
 
-class AudioSource : GameObject {
+class AudioSource : public GameObject {
 
 public:
 
@@ -22,6 +22,8 @@ public:
     void SetVolume(int volume);
     void SetLoopState(bool loopState);
     void SetFadeIn(int fadeIn);
+
+    static constexpr const char* TypeName = "AudioSource";
 
 private:
 

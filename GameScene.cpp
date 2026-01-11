@@ -8,6 +8,7 @@
 #include "Asset.h"
 #include "Sprite.h"
 #include "Text.h"
+#include "AudioSource.h"
 #include "GameState.h"
 #include "AIController.h"
 #include "GameScene.h"
@@ -143,6 +144,9 @@ void GameScene::OnEnter(){
 	GenerateEvaluateStateFunction(mAdversary.symbol, mPlayer.symbol),
 	GenerateSuccessionFunction(mAdversary.symbol, mPlayer.symbol));
 
+    // Initialize grid
+    GenerateGrid(20, 20);
+
     // Background
     auto background = Create<Sprite>("background",
 				     RequestTexture(AssetID::ASSET_TEXTURE_BACKGROUND),
@@ -152,6 +156,7 @@ void GameScene::OnEnter(){
 				     255);
 
     background->SetCollisionState(false);
+
 
     // Create sprite pieces
     auto piecePreview = Create<Sprite>("piece_preview", 
@@ -164,9 +169,6 @@ void GameScene::OnEnter(){
     piecePreview->SetTextureSize(200, 200);
     piecePreview->SetVisibleState(false);
     piecePreview->SetCollisionState(false);
-
-    // Initialize grid
-    GenerateGrid(20, 20);
 
 
     auto cursor = Create<Sprite>("cursor", 
@@ -182,7 +184,6 @@ void GameScene::OnEnter(){
     // Texts
 
     std::string text = "Player"; 
-    //Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
     auto playerText = Create<Text>("player_text",
 				   RequestFontAtlas(AssetID::ASSET_FONT_ATLAS_GABATO),
 				   text,
@@ -195,7 +196,6 @@ void GameScene::OnEnter(){
     playerText->SetCollisionState(false);
 
     text = "Enemy"; 
-    //Text(std::shared_ptr<Font> font, std::string& text, SDL_Color fg, SDL_Point size, SDL_Point position, int layer, int alpha);
     auto enemyText = Create<Text>("adversary_text",
 				   RequestFontAtlas(AssetID::ASSET_FONT_ATLAS_GABATO),
 				   text,
@@ -206,6 +206,16 @@ void GameScene::OnEnter(){
 				   255);
 
     enemyText->SetCollisionState(false);
+
+    // AudioSource
+
+    auto click = Create<AudioSource>("click", RequestAudio(AssetID::ASSET_AUDIO_CLICK));
+    click->SetCollisionState(false);
+
+    // Set cursor's OnClick
+    cursor->OnClick = [&](){
+	GetGameObject<AudioSource>("click")->Play();
+    };
 
 }
 
@@ -222,16 +232,21 @@ void GameScene::Input(){
 	    mousePosition.y = event.motion.y;
 	}
 
+	// TODO: Fix to make easy to call every object that has OnClick and must be called
 	if (mCurrentPlayer.type == PlayerType::PLAYER_TYPE_HUMAN){
 	    if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN){
+	    
+		auto cursor = GetGameObject<Sprite>("cursor");
 
-		auto collidingObj = GetGameObject<Sprite>("cursor")->GetCollidingGameObject();
+		auto collidingObj = cursor->GetCollidingGameObject();
 
 		if (collidingObj != nullptr) {
 		    if ( collidingObj->OnClick != nullptr ) {
 			collidingObj->OnClick();	
 		    }
 		}
+
+		cursor->OnClick();
 	    }
 	}
     };

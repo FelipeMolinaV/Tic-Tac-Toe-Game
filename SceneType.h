@@ -3,7 +3,8 @@
 
 enum class SceneType{
     SCENE_MENU,
-    SCENE_GAME
+    SCENE_GAME,
+    SCENE_TEST
 };
 
 #endif

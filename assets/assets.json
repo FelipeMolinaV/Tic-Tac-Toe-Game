@@ -52,5 +52,12 @@
 			"blue" : 255,
 			"alpha" : 255
 		}
+	],
+	"audio" : [
+		{
+			"type" : "audio",
+			"asset_id" : 9,
+			"path" : "assets/audios/click.wav"
+		}
 	]
 }
