@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "Scene.h"
 #include "SceneType.h"
+#include "SceneDataTransfer.h"
 
 class Game;
 
@@ -23,8 +24,9 @@ public:
 private:
 
     Game* mGame;
-    std::unique_ptr<Scene> currentScene;
-    std::optional<SceneType> nextScene;
+    std::unique_ptr<Scene> mCurrentScene;
+    std::optional<SceneType> mNextScene;
+    std::shared_ptr<SceneDataTransfer> mSceneDataTransfer;
 };
 
 #endif

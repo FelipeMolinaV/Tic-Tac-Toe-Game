@@ -16,8 +16,8 @@ FontAtlas::FontAtlas(SDL_Renderer* renderer, std::string& path, int pixelSize, S
     
     mRenderer = renderer;
 
-    // Create CharacterTexture pointers for 0-9, a-z and A-Z
-    mCharacters.reserve(62);
+    // Create CharacterTexture pointers for space, 0-9, a-z and A-Z
+    mCharacters.reserve(63);
     
     auto createCharacterPointer = [&](int i){
 	
@@ -37,6 +37,8 @@ FontAtlas::FontAtlas(SDL_Renderer* renderer, std::string& path, int pixelSize, S
 
 	SDL_DestroySurface(characterSurface);
     };
+
+    createCharacterPointer(static_cast<int>(' '));
     
     // 0-9
     for (int i = static_cast<int>('0'); i <= static_cast<int>('9'); i++){

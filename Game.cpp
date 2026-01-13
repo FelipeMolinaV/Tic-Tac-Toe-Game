@@ -97,10 +97,14 @@ bool Game::Init(){
 	return false;
     }
     else {
-	mSceneManager->SetScene(SceneType::SCENE_TEST);
+	mSceneManager->SetScene(SceneType::SCENE_SELECT_SIDE);
     }
 
     return true; 
+}
+
+SDL_Window* Game::GetWindow(){
+    return mWindow;
 }
 
 SDL_Renderer* Game::GetRenderer(){

@@ -3,6 +3,8 @@
 
 #include <functional>
 #include <utility>
+#include <random>
+#include <future>
 
 #include "Utils.h"
 
@@ -14,9 +16,10 @@ public:
 		 std::function<int(State, int)> Evaluate,
 		 std::function<std::vector<State>(State, bool)> Successors);
 
-    std::pair<int, int> GetBestMove(State state);
-    std::pair<int, int> GetBestMove(Board board);
-    std::pair<int, int> GetBestMove(Board borad, bool isAlphaBetaPrunning);
+    void RequestBestMove(Board board, int winProbability);
+    bool IsThinking();
+    bool IsRequestPending();
+    std::pair<int, int> GetResult();
 
 private:
 
@@ -26,6 +29,16 @@ private:
     std::function<bool(State)> mIsTerminal;
     std::function<int(State, int)> mEvaluate;
     std::function<std::vector<State>(State, bool)> mSuccessors;
+
+    std::future<std::pair<int, int>> mBestMoveCoordinates;
+    bool mIsThinking; 
+    bool mIsRequestPending;
+
+    std::mt19937 gen;
+
+    std::pair<int, int> GetBestMove(State state);
+    std::pair<int, int> GetBestMove(Board board);
+    std::pair<int, int> GetBestMove(Board board, int winProbability, bool isAlphaBetaPrunning);
 };
 
 #endif

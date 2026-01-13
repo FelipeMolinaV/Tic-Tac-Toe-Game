@@ -33,4 +33,22 @@ std::vector<std::shared_ptr<Renderable>> Scene::GetRenderableObjects(){
     return mRenderableObjects;
 }
 
+std::vector<std::shared_ptr<GameObject>> Scene::GetCollidableObjects(){
+
+    std::vector<std::shared_ptr<GameObject>> collidables;
+
+    for (auto& [type, container] : mGameObjects){
+
+	if (!(type == "Sprite" || type == "Text")){
+	    continue;
+	}
+
+	for (auto& [key, gameObject] : container){
+	    collidables.push_back(gameObject);	
+	}
+    }
+
+    return collidables;
+}
+
 

@@ -67,6 +67,27 @@ AudioSource::AudioSource(std::shared_ptr<Audio> audio,
     SetCollisionState(false);
 }
 
+AudioSource& AudioSource::operator=(AudioSource&& other){
+    if (this != &other){
+
+	this->mSize = std::move(other.mSize);
+	this->mPosition = std::move(other.mPosition);
+	this->mAudio = std::move(other.mAudio);
+	this->mVolume = std::move(other.mVolume);
+	this->mLoopState = std::move(other.mLoopState);
+	this->mFadeIn = std::move(other.mFadeIn);
+    }
+
+    return *this;
+}
+
+AudioSource::AudioSource(AudioSource&& other)
+: GameObject(std::move(other))
+{
+    *this = std::move(other);
+}
+
+
 void AudioSource::Play(){
     mAudio->PlayAudio(mVolume,
 		      (mLoopState) ? -1 : 1,

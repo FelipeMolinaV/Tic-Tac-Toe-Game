@@ -62,6 +62,15 @@ char GetTicTacToeWinner(Board board){
     return winner;
 }
 
+bool HasMoves(Board board){
+    for (int row = 0; row < 3; row++){
+	for (int col = 0; col < 3; col++){
+	    if (board[row][col]->available) return true;
+	}
+    }
+    return false;
+}
+
 std::function<bool(State)> GenerateTerminalFunction(){
     
     auto function = [=](State state){

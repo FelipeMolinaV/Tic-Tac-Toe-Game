@@ -35,6 +35,12 @@ public:
     void SetCollisionState(bool state);
     bool GetCollisionState();
 
+    void SetTag(std::string& tag);
+    std::string GetTag();
+
+    void SetActive(bool active);
+    bool GetActive();
+
     void SetQueryOnly(bool state);
     bool IsQueryOnly();
 
@@ -49,6 +55,8 @@ private:
     std::vector<int> mCollisions;
     bool mCollisionState;
     bool mQueryOnly;
+    std::string mTag;
+    bool mActive;
 
 protected:
 

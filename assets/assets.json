@@ -33,20 +33,35 @@
 		{
 			"type" : "texture",
 			"asset_id" : 6,
-			"path" : "assets/textures/heart_green.png"
-		},
-		{
-			"type" : "texture",
-			"asset_id" : 7,
-			"path" : "assets/textures/heart_red.png"
+			"path" : "assets/textures/green_red_background.png"
 		}
 	],
 	"font_atlas" : [
 		{
 			"type" : "font_atlas",
-			"asset_id" : 8,
+			"asset_id" : 7,
 			"path" : "assets/fonts/Gabato.ttf",
 			"pixel_size" : 64,
+			"red" : 255,
+			"green" : 255,
+			"blue" : 255,
+			"alpha" : 255
+		},
+		{
+			"type" : "font_atlas",
+			"asset_id" : 8,
+			"path" : "assets/fonts/Gabato.ttf",
+			"pixel_size" : 24,
+			"red" : 255,
+			"green" : 255,
+			"blue" : 255,
+			"alpha" : 255
+		},
+		{
+			"type" : "font_atlas",
+			"asset_id" : 9,
+			"path" : "assets/fonts/Gabato.ttf",
+			"pixel_size" : 124,
 			"red" : 255,
 			"green" : 255,
 			"blue" : 255,
@@ -56,7 +71,7 @@
 	"audio" : [
 		{
 			"type" : "audio",
-			"asset_id" : 9,
+			"asset_id" : 10,
 			"path" : "assets/audios/click.wav"
 		}
 	]

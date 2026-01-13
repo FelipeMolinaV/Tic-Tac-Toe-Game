@@ -15,6 +15,7 @@
 #include "Timer.h"
 #include "AssetID.h"
 #include "Sprite.h"
+#include "Text.h"
 #include "GameState.h"
 #include "Texture.h"
 #include "FontAtlas.h"
@@ -54,6 +55,7 @@ private:
     std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<GameObject>>> mGameObjects;
     std::vector<std::shared_ptr<Renderable>> mRenderableObjects;
 
+
 protected:
 
     Game* mGame;
@@ -64,6 +66,8 @@ protected:
 
     std::vector<std::shared_ptr<Renderable>> GetRenderableObjects();
 
+    std::vector<std::shared_ptr<GameObject>> GetCollidableObjects();
+    
     void FlushPendingGameObjects();
 
     template <class T, class... Args>
@@ -83,7 +87,7 @@ protected:
 	std::cout << "ID  : " << newGameObject->GetGameObjectID() << std::endl;
 	std::cout << "KEY : " << key << std::endl;
 	std::cout << "SIZE: " << newGameObject->GetSize().x << " " << newGameObject->GetSize().y << std::endl; 
-	std::cout << "POS : " << newGameObject->GetPosition().x << " " << std::endl;
+	std::cout << "POS : " << newGameObject->GetPosition().x << " " << newGameObject->GetPosition().y << std::endl;
 	std::cout << "COLLISION STATE: " << newGameObject->GetCollisionState() << std::endl;
 	std::cout << "QUERY ONLY: " << newGameObject->IsQueryOnly() << std::endl;
 
@@ -110,13 +114,10 @@ protected:
 	return nullptr;
     }
 
-
     template <class T>
     std::unordered_map<std::string, std::shared_ptr<GameObject>> GetGameObjects(){
 	return mGameObjects[T::TypeName];
     }
-
-
 };
 
 #endif 

@@ -62,7 +62,10 @@ sources = [
   'TestScene.h',
   'TestScene.cpp',
   'RectLayout.h',
-  'RectLayout.cpp'
+  'RectLayout.cpp',
+  'SceneDataTransfer.h',
+  'SelectSideScene.h',
+  'SelectSideScene.cpp'
 ]
 
 executable(

@@ -23,6 +23,7 @@ public:
     bool Init();
     void Run();
 
+    SDL_Window* GetWindow();
     SDL_Renderer* GetRenderer();
     MIX_Mixer* GetMixer();
     GameState GetGameState();

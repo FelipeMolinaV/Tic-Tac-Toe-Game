@@ -16,6 +16,9 @@ public:
     AudioSource(std::shared_ptr<Audio> audio, int volume, bool loopState);
     AudioSource(std::shared_ptr<Audio> audio, int volume, bool loopState, int fadeIn);
     AudioSource(std::shared_ptr<Audio> audio, int volume, bool loopState, int fadeIn, SDL_Point size, SDL_Point position);
+    AudioSource(AudioSource&& other);
+
+    AudioSource& operator=(AudioSource&& other);
 
     void Play();
 

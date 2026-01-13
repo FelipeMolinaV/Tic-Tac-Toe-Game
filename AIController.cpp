@@ -2,15 +2,18 @@
 
 #include <algorithm>
 #include <iostream>
-#include <cmath>
 
 AIController::AIController(std::function<bool(State)> isTerminal,
 			   std::function<int(State, int)> evaluate,
 			   std::function<std::vector<State>(State, bool)> successors)
+    : gen(std::random_device{}())   
 {
     mIsTerminal = isTerminal;
     mEvaluate = evaluate;
     mSuccessors = successors;
+    mIsThinking = false; 
+    mIsRequestPending = false;
+
 };
 
 int AIController::Minimax(State state, int depth, bool isMaximizing){
@@ -122,7 +125,9 @@ std::pair<int, int> AIController::GetBestMove(Board board){
     return {-1, -1};
 }
 
-std::pair<int, int> AIController::GetBestMove(Board board, bool isAlphaBetaPrunning){
+std::pair<int, int> AIController::GetBestMove(Board board, int winProbability, bool isAlphaBetaPrunning){
+
+    std::uniform_int_distribution<> dis(0, 100);
 
     State state;
     state.board = board;
@@ -143,6 +148,9 @@ std::pair<int, int> AIController::GetBestMove(Board board, bool isAlphaBetaPrunn
     State bestMove;
     int bestValue = -1000;
 
+    State worstMove;
+    int worstValue = 1000;
+
     for (auto s : mSuccessors(state, true)){
 	int value = (isAlphaBetaPrunning) ? 
 	    MinimaxAlphaBetaPrunning(s, 0, -1000, 1000, false) :
@@ -151,12 +159,20 @@ std::pair<int, int> AIController::GetBestMove(Board board, bool isAlphaBetaPrunn
 	    bestValue = value;
 	    bestMove = s;
 	}
+
+	if (value < worstValue){
+	    worstValue = value;
+	    worstMove = s;
+	}
     }
 
+    int successProb = dis(gen);
+
+    State nextState = (successProb > winProbability) ? worstMove : bestMove;
 
     for (int row = 0; row < 3; row++){
 	for (int col = 0; col < 3; col++){
-	    if (state.board[row][col]->symbol == bestMove.board[row][col]->symbol) continue;
+	    if (state.board[row][col]->symbol == nextState.board[row][col]->symbol) continue;
 	    return {row, col};
 	}
     }
@@ -164,3 +180,31 @@ std::pair<int, int> AIController::GetBestMove(Board board, bool isAlphaBetaPrunn
     return {-1, -1};
 }
 
+void AIController::RequestBestMove(Board board, int winProbability){
+    mIsThinking = true;
+    mIsRequestPending = true;
+    mBestMoveCoordinates = std::async(std::launch::async, [this, board, winProbability](){
+	return GetBestMove(board, winProbability, true);
+    });
+}
+
+bool AIController::IsRequestPending(){
+    return mIsRequestPending;
+}
+
+bool AIController::IsThinking(){
+
+    if (!mIsThinking) return false;
+    
+    if (mBestMoveCoordinates.wait_for(std::chrono::seconds(0)) == std::future_status::ready){
+	return false;
+    }
+
+    return true;
+}
+
+std::pair<int, int> AIController::GetResult(){
+    mIsThinking = false;
+    mIsRequestPending = false;
+    return mBestMoveCoordinates.get();
+}

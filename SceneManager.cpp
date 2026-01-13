@@ -7,11 +7,13 @@
 #include "SceneManager.h"
 #include "GameState.h"
 #include "GameScene.h"
+#include "SelectSideScene.h" 
 #include "TestScene.h"
 #include "Texture.h"
 #include "FontAtlas.h"
 #include "GameObject.h"
 #include "CollisionSystem.h"
+#include "Utils.h"
 
 SceneManager::SceneManager(Game* game){
     // TODO: replace with throw 
@@ -20,76 +22,84 @@ SceneManager::SceneManager(Game* game){
     }
 
     mGame = game;
+
+    mSceneDataTransfer = std::make_shared<SceneDataTransfer>();
 }
 
 bool SceneManager::SetScene(SceneType type){
 
+    // Set mouse in screen's center
+    SDL_WarpMouseInWindow(mGame->GetWindow(), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+
     switch (type){
+	case SceneType::SCENE_SELECT_SIDE:
+	    mCurrentScene = std::make_unique<SelectSideScene>(mGame, mSceneDataTransfer);
+	    break;
 	case SceneType::SCENE_GAME:
-	    currentScene = std::make_unique<GameScene>(mGame); 
+	    mCurrentScene = std::make_unique<GameScene>(mGame, mSceneDataTransfer); 
 	    break;
 	case SceneType::SCENE_TEST:
-	    currentScene = std::make_unique<TestScene>(mGame);
+	    mCurrentScene = std::make_unique<TestScene>(mGame);
 	    break;
 	default:
 	    return false;
     }
 
-    currentScene->RequestGameStateChange = [&](GameState state){
+    mCurrentScene->RequestGameStateChange = [&](GameState state){
 	mGame->SetGameState(state);
     };
 
-    currentScene->RequestInput = [&](std::function<void(SDL_Event)> function){
+    mCurrentScene->RequestInput = [&](std::function<void(SDL_Event)> function){
 	SDL_Event event;
 	while (SDL_PollEvent(&event)){
 	   function(event); 
 	}
     };
 
-    currentScene->RequestSceneChange = [&](SceneType type){
-	nextScene = type;
+    mCurrentScene->RequestSceneChange = [&](SceneType type){
+	mNextScene = type;
     };
 
-    currentScene->RequestRender = [&](std::function<void()> function){
+    mCurrentScene->RequestRender = [&](std::function<void()> function){
 	SDL_SetRenderDrawColor(mGame->GetRenderer(), 0, 0, 0, 255);
 	SDL_RenderClear(mGame->GetRenderer());
 	function();
 	SDL_RenderPresent(mGame->GetRenderer());
     };
 
-    currentScene->RequestTexture = [&](int assetID){
+    mCurrentScene->RequestTexture = [&](int assetID){
 	std::shared_ptr<Texture> texture = mGame->GetAssetManager()->GetAsset<Texture>(assetID);
 	return texture;
     };
 
-    currentScene->RequestFontAtlas = [&](int assetID){
+    mCurrentScene->RequestFontAtlas = [&](int assetID){
 	std::shared_ptr<FontAtlas> fontAtlas = mGame->GetAssetManager()->GetAsset<FontAtlas>(assetID);
 	return fontAtlas;
     };
 
-    currentScene->RequestAudio = [&](int assetID){
+    mCurrentScene->RequestAudio = [&](int assetID){
 	std::shared_ptr<Audio> audio = mGame->GetAssetManager()->GetAsset<Audio>(assetID);
 	return audio;
     };
 
-    currentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){
+    mCurrentScene->RequestCheckCollisions = [&](std::vector<std::shared_ptr<GameObject>> sprites){
 	CheckCollisions(sprites);
     };
 
-    currentScene->OnEnter();
+    mCurrentScene->OnEnter();
     return true;
 }
 
 void SceneManager::Tick(){
 
-    currentScene->Input();
-    currentScene->Update();
-    currentScene->Render();
+    mCurrentScene->Input();
+    mCurrentScene->Update();
+    mCurrentScene->Render();
 
-    if (nextScene.has_value()){
-	currentScene->OnExit();
-	SetScene(nextScene.value());
-	nextScene.reset();
+    if (mNextScene.has_value()){
+	mCurrentScene->OnExit();
+	SetScene(mNextScene.value());
+	mNextScene.reset();
     }
 }
 

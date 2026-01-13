@@ -8,6 +8,8 @@
 
 char GetTicTacToeWinner(Board board);
 
+bool HasMoves(Board board);
+
 // return IsTerminal
 std::function<bool(State)> GenerateTerminalFunction();
 

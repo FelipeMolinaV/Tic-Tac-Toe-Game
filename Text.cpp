@@ -1,5 +1,7 @@
 #include "Text.h"
 
+#include <utility>
+
 Text::Text(std::shared_ptr<FontAtlas> fontAtlas, std::string& text, SDL_Color fg){
     mFontAtlas = fontAtlas;
     mText = text;
@@ -51,7 +53,29 @@ Text::Text(std::shared_ptr<FontAtlas> fontAtlas, std::string& text, SDL_Color fg
     mAlpha = alpha;
 }
 
-void Text::SetText(std::string& text){
+Text& Text::operator=(Text&& other){
+    if (this != &other){
+
+	this->mSize = std::move(other.mSize);
+	this->mPosition = std::move(other.mPosition);
+	this->mFontAtlas =  std::move(other.mFontAtlas);
+	this->mText =  std::move(other.mText);
+	this->mForegroundColor =  std::move(other.mForegroundColor);
+	this->mVisibleState =  std::move(other.mVisibleState);
+	this->mLayer =  std::move(other.mLayer);
+	this->mAlpha =  std::move(other.mAlpha);
+    }
+
+    return *this;
+}
+
+Text::Text(Text&& other)
+: GameObject(std::move(other))
+{
+    *this = std::move(other);
+}
+
+void Text::SetText(std::string text){
     mText = text;
 }
 
@@ -60,7 +84,9 @@ std::string& Text::GetText(){
 }
 
 void Text::Render(){
-    mFontAtlas->RenderText(mSize, mPosition, mText, mAlpha); 
+    if (GetActive()){
+	mFontAtlas->RenderText(mSize, mPosition, mText, mAlpha); 
+    }
 }
 
 void Text::SetLayer(int layer){

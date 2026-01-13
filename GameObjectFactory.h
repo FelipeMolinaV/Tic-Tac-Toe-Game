@@ -21,6 +21,15 @@ public:
 	return newGameObject;
     }
 
+    template <class T, class... Args>
+    T CreateRawGameObject(Args&&... args){
+	static_assert(std::is_base_of_v<GameObject, T>, "T must inherit from GameObject");
+	T newGameObject = T(std::forward<Args>(args)...);
+	newGameObject.SetGameObjectID(++countID);
+	return newGameObject;
+    }
+    
+
 private:
 
     int countID;

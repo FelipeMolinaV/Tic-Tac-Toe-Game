@@ -8,6 +8,8 @@ GameObject::GameObject(){
     OnClick = nullptr;
     mQueryOnly = false;
     mCollidingGameObject = nullptr;
+    mTag = "";
+    mActive = true;
 }
 
 GameObject::GameObject(SDL_Point size){
@@ -18,6 +20,8 @@ GameObject::GameObject(SDL_Point size){
     OnClick = nullptr;
     mQueryOnly = false;
     mCollidingGameObject = nullptr;
+    mTag = "";
+    mActive = true;
 }
 
 GameObject::GameObject(SDL_Point size, SDL_Point position){
@@ -29,6 +33,8 @@ GameObject::GameObject(SDL_Point size, SDL_Point position){
     OnClick = nullptr;
     mQueryOnly = false;
     mCollidingGameObject = nullptr;
+    mTag = "";
+    mActive = true;
 }
 
 int GameObject::GetGameObjectID(){
@@ -79,6 +85,22 @@ SDL_Point& GameObject::GetPosition(){
 void GameObject::SetPosition(int x, int y){
     mPosition.x = x;
     mPosition.y = y;
+}
+
+void GameObject::SetTag(std::string& tag){
+    mTag = tag;
+}
+
+std::string GameObject::GetTag(){
+    return mTag;
+}
+
+void GameObject::SetActive(bool active){
+    mActive = active;
+}
+
+bool GameObject::GetActive(){
+    return mActive;
 }
 
 void GameObject::SetCollisionState(bool state){

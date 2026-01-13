@@ -3,6 +3,7 @@
 
 enum class SceneType{
     SCENE_MENU,
+    SCENE_SELECT_SIDE,
     SCENE_GAME,
     SCENE_TEST
 };
